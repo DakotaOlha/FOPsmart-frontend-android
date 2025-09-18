@@ -1,46 +1,32 @@
 package com.example.fopsmart.data
 
 import com.example.fopsmart.data.model.LoggedInUser
+import com.example.fopsmart.data.model.LoginRequest
+import com.example.fopsmart.data.network.RetrofitClient
+import java.io.IOException
 
-/**
- * Class that requests authentication and user information from the remote data source and
- * maintains an in-memory cache of login status and user credentials information.
- */
+class LoginRepository {
+    private val api = RetrofitClient.api
 
-class LoginRepository(val dataSource: LoginDataSource) {
-
-    // in-memory cache of the loggedInUser object
-    var user: LoggedInUser? = null
-        private set
-
-    val isLoggedIn: Boolean
-        get() = user != null
-
-    init {
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-        user = null
-    }
-
-    fun logout() {
-        user = null
-        dataSource.logout()
-    }
-
-    fun login(username: String, password: String): Result<LoggedInUser> {
-        // handle login
-        val result = dataSource.login(username, password)
-
-        if (result is Result.Success) {
-            setLoggedInUser(result.data)
+    suspend fun login(username: String, password: String): Result<LoggedInUser> {
+        return try {
+            val response = api.login(LoginRequest(username, password))
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null){
+                    val loggedInUser = LoggedInUser(
+                        userId = body.user.id,
+                        displayName = body.user.email
+                    )
+                    Result.Success(loggedInUser)
+                }
+                else
+                    Result.Error(IOException("Empty response body"))
+            } else {
+                Result.Error(IOException("Error logging in"))
+            }
+        } catch (e: Exception) {
+            Result.Error(IOException("Network error", e))
         }
-
-        return result
-    }
-
-    private fun setLoggedInUser(loggedInUser: LoggedInUser) {
-        this.user = loggedInUser
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
     }
 }

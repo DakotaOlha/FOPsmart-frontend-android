@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/field_round_white"
+        android:fontFamily="@font/manrope"
+        android:textSize="15dp"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="20dp"
+        android:textColorHint="@color/hint" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/field_round_white"
+        android:hint="@string/hint_pass"
+        android:fontFamily="@font/manrope"
+        android:textSize="15dp"
+        android:textColorHint="@color/hint"
+        android:paddingStart="20dp"
+        android:inputType="textPassword" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRegister"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="356dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_round_purple"
+        android:fontFamily="@font/manrope_bold"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/action_sign_up"
+        android:textAllCaps="false"
+        android:textSize="24dp" />
+
+    <TextView
+        android:id="@+id/tvGoToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:paddingTop="16dp"
+        android:text="Вже маєш акаунт? Увійди"
+        android:textColor="@android:color/holo_blue_dark" />
+</LinearLayout>

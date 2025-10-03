@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "https://fopsmart-backend.onrender.com"
+    private const val BASE_URL = "https://fopsmart-4030403a47a5.herokuapp.com"
 
     val api: ApiService by lazy {
         Retrofit.Builder()

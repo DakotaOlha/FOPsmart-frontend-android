@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FOPsmart">
         <activity
+            android:name=".ui.helloScript.HelloActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login" />
@@ -30,7 +33,7 @@
         <activity
             android:name=".ui.register.RegisterActivity"
             android:exported="false"
-            android:label="RegisterActivity"/>
+            android:label="RegisterActivity" />
     </application>
 
 </manifest>

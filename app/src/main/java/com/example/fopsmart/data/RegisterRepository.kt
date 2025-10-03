@@ -5,5 +5,5 @@ import com.example.fopsmart.data.network.RetrofitClient
 
 class RegisterRepository {
     suspend fun register(email: String, password: String) =
-        RetrofitClient.api.register(RegisterRequest(email, password))
+        RetrofitClient.api.register(RegisterRequest(email, password, "Чаюк Ольга", 2))
 }

@@ -1,24 +1,11 @@
-<!-- item_carousel.xml - окремий layout для кожного слайду -->
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp"
-    android:layout_margin="8dp">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <com.example.fopsmart.ZoomableImageView
+        android:id="@+id/zoomableImageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/d1" />
-
-
-    </RelativeLayout>
-
-</androidx.cardview.widget.CardView>
+</FrameLayout>

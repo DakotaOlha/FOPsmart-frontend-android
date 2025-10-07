@@ -1,9 +1,11 @@
 <resources>
     <!-- Main -->
     <string name="app_name">FOPSmart</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Гроші</string>
+    <string name="title_chat">Чат</string>
+    <string name="title_stats">Дані</string>
+    <string name="title_report">Звіт</string>
+    <string name="title_add">Додати</string>
     <string name="title_activity_login">LoginActivity</string>
     <!-- Login/Register -->
     <string name="prompt_email">Email</string>

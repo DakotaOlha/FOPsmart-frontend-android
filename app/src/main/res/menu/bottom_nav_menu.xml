@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/HomeFragment"
+        android:id="@+id/navigation_home"
         android:icon="@drawable/ic_wallet"
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/fragment_stats"
+        android:id="@+id/navigation_stats"
         android:icon="@drawable/ic_stats"
         android:title="@string/title_stats" />
 
@@ -17,7 +17,7 @@
         />
 
     <item
-        android:id="@+id/СhatFragment"
+        android:id="@+id/navigation_chat"
         android:icon="@drawable/ic_chat"
         android:title="@string/title_chat" />
 

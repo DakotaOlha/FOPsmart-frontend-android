@@ -5,6 +5,9 @@
     <color name="hint">#B1B1B8</color>
     <color name="stroke">#87878D</color>
     <color name="back">#333B82F6</color>
+    <color name="blue100">#D8E6FD</color>
+    <color name="green500">#28A745</color>
+    <color name="red500">#DC3545</color>
 
     <color name="nav_item_active">#7C4DFF</color>
     <color name="nav_item_inactive">#000000</color>

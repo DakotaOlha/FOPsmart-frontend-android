@@ -1,0 +1,29 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="NoButtonTint" parent="@style/ThemeOverlay.MaterialComponents">
+        <item name="materialButtonStyle">@style/NoTintMaterialButton</item>
+    </style>
+
+    <style name="NoTintMaterialButton" parent="@style/Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@null</item>
+        <item name="rippleColor">@null</item>
+    </style>
+
+    <style name="BottomNavigationTheme" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/bottom_nav_color</item>
+        <item name="itemTextColor">@color/bottom_nav_color</item>
+    </style>
+
+    <style name="BottomNavTextActive" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="BottomNavTextInactive" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+
+</resources>

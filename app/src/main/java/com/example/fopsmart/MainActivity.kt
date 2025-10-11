@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.bottomNavigationView
         val fabAdd: FloatingActionButton = binding.fabAdd
 
-        navView.menu.removeItem(R.id.navigation_add)
-
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.frame_layout) as NavHostFragment
         navController = navHostFragment.navController

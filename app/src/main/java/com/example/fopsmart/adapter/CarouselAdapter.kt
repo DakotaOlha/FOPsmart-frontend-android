@@ -3,7 +3,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fopsmart.R
-import com.example.fopsmart.ZoomableImageView
+import com.example.fopsmart.ui.stats.ZoomableImageView
 
 class CarouselAdapter(private val images: List<Int>) :
     RecyclerView.Adapter<CarouselAdapter.CarouselViewHolder>() {

@@ -1,0 +1,8 @@
+[33mb283ed3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m Fix some problem with actionbar
+[33m6b746c2[m Add templates for button and field
+[33mfe80f55[m Add first connection to api
+[33m4b685ad[m Change some colors and add fonts
+[33m4e23d93[m Add api and routs
+[33md668959[m Add new dependencies to manifest and gradle
+[33mc0a933b[m[33m ([m[1;32mmain[m[33m)[m Create login view
+[33me3368ea[m[33m ([m[1;31morigin/main[m[33m)[m Create app

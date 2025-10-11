@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.fopsmart.ZoomableImageView
+    <com.example.fopsmart.ui.stats.ZoomableImageView
         android:id="@+id/zoomableImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

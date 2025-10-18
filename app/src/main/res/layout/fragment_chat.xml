@@ -3,11 +3,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.chat.ChatFragment">
+    tools:context=".ui.chat.ChatFragment"
+    android:background="@color/blue100">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chat_recycler"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="80dp"
+        android:clipToPadding="false"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Chat" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
+        >
+        
+        <ImageView
+            android:id="@+id/app_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_light"
+            android:contentDescription="FOPSmart Logo"/>
+
+        <TextView
+            android:id="@+id/initial_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Які є групи фоп?"
+            android:textSize="16sp"
+            android:textColor="@color/dark_gray"
+            android:background="@drawable/chat_bubble_bot"
+            android:padding="16dp"
+            android:layout_marginTop="30dp"
+            android:maxWidth="300dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/input_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="@color/light_blue">
+
+        <!-- EditText for message input -->
+        <EditText
+            android:id="@+id/message_input"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="Запитайте щось"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textSize="16sp"
+            android:background="@drawable/input_field_background"
+            android:textColor="@color/dark_gray"
+            android:textColorHint="@color/hint_gray" />
+
+        <!-- Send Button -->
+        <ImageButton
+            android:id="@+id/send_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="12dp"
+            android:src="@drawable/ic_send"
+            android:background="@drawable/button_background"
+            android:contentDescription="Send message"
+            android:scaleType="centerInside" />
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -9,6 +9,8 @@ import com.example.fopsmart.data.Result
 import com.example.fopsmart.data.TransactionRepository
 import com.example.fopsmart.data.model.Transaction
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
+import java.util.Locale
 
 class HomeViewModel : ViewModel() {
 
@@ -182,6 +184,15 @@ class HomeViewModel : ViewModel() {
     @SuppressLint("DefaultLocale")
     private fun calculateBalance(transactions: List<Transaction>) {
         val balance = transactions.sumOf { it.amount }
-        _totalBalance.value = String.format("%.2f", balance)
+
+        val currencyFormatter = NumberFormat.getCurrencyInstance(Locale("uk", "UA"))
+
+        val decimalFormatSymbols = (currencyFormatter as? java.text.DecimalFormat)?.decimalFormatSymbols
+        decimalFormatSymbols?.currencySymbol = ""
+        decimalFormatSymbols?.groupingSeparator = ' '
+        (currencyFormatter as? java.text.DecimalFormat)?.decimalFormatSymbols = decimalFormatSymbols
+        (currencyFormatter as? java.text.DecimalFormat)?.maximumFractionDigits = 0
+
+        _totalBalance.value = currencyFormatter.format(balance)
     }
 }

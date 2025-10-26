@@ -12,11 +12,13 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.example.fopsmart.MainActivity
 import com.example.fopsmart.databinding.ActivityLoginBinding
 
 import com.example.fopsmart.R
+import com.example.fopsmart.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -33,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.password
         val login = binding.login
         val loading = binding.loading
+        val registerButton : TextView = findViewById(R.id.tvGoToLogin)
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -97,6 +100,14 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
+
+        registerButton.setOnClickListener {
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
@@ -109,14 +120,13 @@ class LoginActivity : AppCompatActivity() {
             Toast.LENGTH_LONG
         ).show()
 
-        //зберігаю стан авторизації
         getSharedPreferences("app_prefs", MODE_PRIVATE)
             .edit()
             .putBoolean("is_logged_in", true)
             .apply()
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-        //очищує всі стани активностей, користувач більше не може вернутися
+
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()

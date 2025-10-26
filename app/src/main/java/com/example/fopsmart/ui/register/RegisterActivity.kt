@@ -28,7 +28,6 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Виклик register з ViewModel
             registerViewModel.register(
                 email,
                 password,

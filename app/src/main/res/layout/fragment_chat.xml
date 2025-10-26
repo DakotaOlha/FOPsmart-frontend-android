@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="Які є групи фоп?"
             android:textSize="16sp"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/main_purple"
             android:background="@drawable/chat_bubble_bot"
             android:padding="16dp"
             android:layout_marginTop="30dp"
@@ -52,9 +52,8 @@
         android:layout_gravity="bottom"
         android:orientation="horizontal"
         android:padding="12dp"
-        android:background="@color/light_blue">
+        android:background="@color/blue100">
 
-        <!-- EditText for message input -->
         <EditText
             android:id="@+id/message_input"
             android:layout_width="0dp"
@@ -65,16 +64,15 @@
             android:paddingRight="16dp"
             android:textSize="16sp"
             android:background="@drawable/input_field_background"
-            android:textColor="@color/dark_gray"
-            android:textColorHint="@color/hint_gray" />
+            android:textColor="@color/main_purple"
+            android:textColorHint="@color/hint" />
 
-        <!-- Send Button -->
         <ImageButton
             android:id="@+id/send_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="12dp"
-            android:src="@drawable/ic_send"
+            android:src="@drawable/ic_add"
             android:background="@drawable/button_background"
             android:contentDescription="Send message"
             android:scaleType="centerInside" />

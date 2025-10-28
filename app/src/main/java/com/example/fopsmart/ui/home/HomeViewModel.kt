@@ -28,8 +28,36 @@ class HomeViewModel : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
+    private val _isBankConnection = MutableLiveData<Boolean>()
+    val isBankConnection: LiveData<Boolean> = _isBankConnection
+
+    private val _bankConnectionError = MutableLiveData<String?>()
+    val bankConnectionError: LiveData<String?> = _bankConnectionError
+
+    fun checkBunkConnectionStatus(token: String) {
+//        viewModelScore.launch {
+//            _isLoading.value = true
+//
+//            when (val result = transactionRepository.checkBankStatus(token)){
+//                is Result.Success -> {
+//                    val isBankConnected = result.data
+//                    _isBankConnection.value = isBankConnected
+//                    _bankConnectionError.value = null
+//
+//                    if (isBankConnected) {
+//                        loadMockTransactions()
+//                    } else {
+//
+//                    }
+//                }
+//                is Result.Error -> {
+//
+//                }
+//            }
+//        }
+    }
+
     init {
-        //тимчасово, поміняти на дані з апішки
         loadMockTransactions()
     }
 

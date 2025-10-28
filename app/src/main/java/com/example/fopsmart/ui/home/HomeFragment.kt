@@ -1,5 +1,6 @@
 package com.example.fopsmart.ui.home
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var transactionAdapter: TransactionAdapter
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,

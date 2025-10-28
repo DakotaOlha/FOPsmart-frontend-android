@@ -24,4 +24,8 @@ class TransactionRepository {
             Result.Error(IOException("Network error", e))
         }
     }
+
+    fun checkBankStatus(token: String): Result<Boolean> {
+        return Result.Success(true)
+    }
 }

@@ -1,9 +1,12 @@
 package com.example.fopsmart
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -23,6 +26,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+            binding.bottomAppBar.visibility = if (isKeyboardVisible) View.GONE else View.VISIBLE
+            insets
+        }
+
         val navView: BottomNavigationView = binding.bottomNavigationView
         val fabAdd: FloatingActionButton = binding.fabAdd
 
@@ -35,5 +44,6 @@ class MainActivity : AppCompatActivity() {
         fabAdd.setOnClickListener {
             Toast.makeText(this, "Add transaction button", Toast.LENGTH_SHORT).show()
         }
+
     }
 }

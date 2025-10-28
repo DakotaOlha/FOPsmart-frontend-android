@@ -3,8 +3,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="80dp"
     tools:context=".ui.chat.ChatFragment"
     android:background="@color/blue100">
+
+    <LinearLayout
+        android:id="@+id/empty_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="40dp"
+        android:paddingBottom="80dp">
+
+        <ImageView
+            android:id="@+id/app_logo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:contentDescription="FOPSmart Logo"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo_light" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="FOPSmart AI"
+            android:textColor="@color/main_purple"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Запитайте щось про ФОП"
+            android:textColor="@color/hint"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="32dp"
+            android:paddingTop="32dp"
+            android:paddingRight="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/chat_bubble_bot"
+                android:padding="12dp"
+                android:text="Які є групи ФОП?"
+                android:textColor="@color/main_purple"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/chat_bubble_bot"
+                android:padding="12dp"
+                android:text="Як реєструється ФОП?"
+                android:textColor="@color/main_purple"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/chat_bubble_bot"
+                android:padding="12dp"
+                android:text="Які податки платити ФОП?"
+                android:textColor="@color/main_purple"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recycler"
@@ -12,38 +89,10 @@
         android:layout_width="match_parent"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:paddingTop="8dp"
         android:paddingBottom="80dp"
-        android:clipToPadding="false"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:paddingTop="40dp"
-        android:paddingBottom="40dp"
-        >
-        
-        <ImageView
-            android:id="@+id/app_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo_light"
-            android:contentDescription="FOPSmart Logo"/>
-
-        <TextView
-            android:id="@+id/initial_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Які є групи фоп?"
-            android:textSize="16sp"
-            android:textColor="@color/main_purple"
-            android:background="@drawable/chat_bubble_bot"
-            android:padding="16dp"
-            android:layout_marginTop="30dp"
-            android:maxWidth="300dp" />
-
-    </LinearLayout>
+        android:clipToPadding="false"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/input_container"
@@ -52,7 +101,8 @@
         android:layout_gravity="bottom"
         android:orientation="horizontal"
         android:padding="12dp"
-        android:background="@color/blue100">
+        android:background="@color/blue100"
+        android:elevation="4dp">
 
         <EditText
             android:id="@+id/message_input"
@@ -65,7 +115,8 @@
             android:textSize="16sp"
             android:background="@drawable/input_field_background"
             android:textColor="@color/main_purple"
-            android:textColorHint="@color/hint" />
+            android:textColorHint="@color/hint"
+            android:inputType="text" />
 
         <ImageButton
             android:id="@+id/send_button"
@@ -74,9 +125,17 @@
             android:layout_marginLeft="12dp"
             android:src="@drawable/ic_add"
             android:background="@drawable/button_background"
-            android:contentDescription="Send message"
+            android:contentDescription="Відправити повідомлення"
             android:scaleType="centerInside" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loading_indicator"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="90dp"
+        android:visibility="gone" />
 
 </FrameLayout>

@@ -50,6 +50,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView5">
 
+        <TextView
+            android:id="@+id/connectBankText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70sp"
+            android:text="Підключіть банк"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/connectBankButton"
+            android:layout_width="240sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30sp"
+            android:background="@drawable/btn_round_purple"
+            android:text="Підключити"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewTransactions"
             android:layout_width="match_parent"
@@ -66,7 +92,7 @@
         android:layout_height="100dp"
         android:fontFamily="@font/manrope_bold"
         android:gravity="center_vertical"
-        android:text="$ 4 500"
+        android:text="No many"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="40sp"

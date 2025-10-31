@@ -40,7 +40,13 @@ class ChatViewModel : ViewModel() {
                         _messages.value = _messages.value!! + ChatMessage(errorMsg, isFromUser = false)
                     }
                 }
-            } catch (e: Exception) {
+            }
+            catch (e: java.net.SocketTimeoutException){
+                withContext(Dispatchers.Main) {
+                    _messages.value = _messages.value!! + ChatMessage("Тайм-аут: Сервер не відповідає. Спробуйте ще раз.", isFromUser = false)
+                }
+            }
+            catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     val errorMsg = "Помилка мережі: ${e.message}"
                     _messages.value = _messages.value!! + ChatMessage(errorMsg, isFromUser = false)

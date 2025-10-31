@@ -85,25 +85,21 @@ class ChatFragment : Fragment() {
             chatAdapter.notifyDataSetChanged()
 
             if (messages.isNotEmpty()) {
-                // Прокрутка до останнього повідомлення
                 binding.chatRecycler.smoothScrollToPosition(messages.size - 1)
 
-                // Якщо це було перше повідомлення, сховати "empty state"
                 if (wasEmpty) {
                     binding.emptyState.visibility = View.GONE
                     binding.chatRecycler.visibility = View.VISIBLE
                 }
             } else {
-                // Якщо повідомлень немає (навряд чи, але про всяк випадок)
                 binding.emptyState.visibility = View.VISIBLE
                 binding.chatRecycler.visibility = View.GONE
             }
         }
 
-        // Спостерігач за станом завантаження
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.loadingIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
-            binding.sendButton.isEnabled = !isLoading // Блокуємо кнопку під час завантаження
+            binding.sendButton.isEnabled = !isLoading
         }
     }
 

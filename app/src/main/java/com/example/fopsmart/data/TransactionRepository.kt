@@ -10,12 +10,19 @@ class TransactionRepository {
 
     private val apiService = RetrofitClient.mainApi
     private val TAG = "TransactionRepository"
+    val startDate = "2025-10-01"
+    val endDate = "2025-11-02"
 
     suspend fun getTransactions(token: String): Result<List<Transaction>> {
         return try {
             Log.d(TAG, "Відправляємо запит getTransactions")
 
-            val response = apiService.getTransactions("Bearer $token", null, null, 100)
+            val response = apiService.getTransactions(
+                token = token,
+                dateFrom = startDate,
+                dateTo = endDate,
+                id = 42 // ID рахунку, для якого шукаємо
+            )
             Log.d(TAG, "Response code: ${response.code()}")
 
             if (response.isSuccessful) {

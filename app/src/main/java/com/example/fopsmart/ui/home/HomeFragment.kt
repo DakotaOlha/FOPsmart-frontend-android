@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -34,15 +32,41 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        sharedPreferences = requireContext().getSharedPreferences("app_prefs", 0)
+
         setupRecyclerView()
         observeTransactions()
+        observeBankConnection()
+        observeLoading()
+        setupConnectBankButton()
+
+        checkBankStatusOnFragmentLoad()
 
         return root
     }
 
+    private fun checkBankStatusOnFragmentLoad() {
+        val token = sharedPreferences.getString("auth_token", null)
+
+        if (token != null && token.isNotBlank()) {
+            homeViewModel.checkBankConnectionStatus(token)
+        } else {
+            homeViewModel.loadMockTransactions()
+            Toast.makeText(
+                requireContext(),
+                "Токен не знайдений, показуються тестові дані",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
     private fun setupRecyclerView() {
         transactionAdapter = TransactionAdapter { transaction ->
-            Toast.makeText(context, "Clicked: ${transaction.description}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "Клік: ${transaction.description}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         binding.recyclerViewTransactions.apply {
@@ -57,7 +81,61 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.totalBalance.observe(viewLifecycleOwner) { balance ->
-            binding.textView5.text = "$ $balance"
+            binding.textView5.text = balance
+        }
+    }
+
+    private fun observeBankConnection() {
+        homeViewModel.isBankConnection.observe(viewLifecycleOwner) { isBankConnected ->
+            updateUIBasedOnBankConnection(isBankConnected)
+        }
+
+        homeViewModel.bankConnectionError.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                Toast.makeText(
+                    context,
+                    "Помилка підключення: $error",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        homeViewModel.error.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                Toast.makeText(context, "Помилка: $error", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun observeLoading() {
+        homeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            // Можна показати лоадер якщо потрібно
+            // binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun updateUIBasedOnBankConnection(isBankConnected: Boolean) {
+        if (isBankConnected) {
+            binding.bankNotConnectedContainer.visibility = View.GONE
+            binding.recyclerViewTransactions.visibility = View.VISIBLE
+
+        } else {
+            binding.bankNotConnectedContainer.visibility = View.VISIBLE
+            binding.recyclerViewTransactions.visibility = View.GONE
+        }
+    }
+
+    private fun setupConnectBankButton() {
+        binding.connectBankButton.setOnClickListener {
+            Toast.makeText(
+                context,
+                "Функція підключення банку буде реалізована",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            // TODO: Реалізувати редирект на сторінку підключення Монобанку
+            // val intent = Intent(requireContext(), MonobankConnectActivity::class.java)
+            // startActivity(intent)
         }
     }
 

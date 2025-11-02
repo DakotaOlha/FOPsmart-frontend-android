@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnPreDraw
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fopsmart.R
+import com.example.fopsmart.adapter.ChatAdapter
+import com.example.fopsmart.data.model.ChatMessage
 import com.example.fopsmart.databinding.FragmentChatBinding
 
 class ChatFragment : Fragment() {
@@ -17,12 +20,14 @@ class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: ChatViewModel by viewModels()
+
+    private lateinit var chatAdapter: ChatAdapter
+    private val messageList = mutableListOf<ChatMessage>()
 
     companion object {
         fun newInstance() = ChatFragment()
     }
-
-    private val viewModel: ChatViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +44,66 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecyclerView()
+
+        setupClickListeners()
+
+        setupObservers()
+
         binding.root.doOnPreDraw {
             setupKeyboardListener()
             setupInputFocusListener()
+        }
+    }
+
+    private fun setupRecyclerView() {
+        chatAdapter = ChatAdapter(messageList)
+        binding.chatRecycler.apply {
+            adapter = chatAdapter
+            layoutManager = LinearLayoutManager(context).apply {
+                stackFromEnd = true
+            }
+        }
+    }
+
+    private fun setupClickListeners() {
+        binding.sendButton.setOnClickListener {
+            val query = binding.messageInput.text.toString().trim()
+            if (query.isNotEmpty()) {
+                viewModel.sendMessage(query)
+                binding.messageInput.text.clear()
+            }
+        }
+    }
+
+    private fun setupObservers() {
+        // Спостерігач за списком повідомлень
+        viewModel.messages.observe(viewLifecycleOwner) { messages ->
+            val wasEmpty = messageList.isEmpty()
+            messageList.clear()
+            messageList.addAll(messages)
+            chatAdapter.notifyDataSetChanged()
+
+            if (messages.isNotEmpty()) {
+                // Прокрутка до останнього повідомлення
+                binding.chatRecycler.smoothScrollToPosition(messages.size - 1)
+
+                // Якщо це було перше повідомлення, сховати "empty state"
+                if (wasEmpty) {
+                    binding.emptyState.visibility = View.GONE
+                    binding.chatRecycler.visibility = View.VISIBLE
+                }
+            } else {
+                // Якщо повідомлень немає (навряд чи, але про всяк випадок)
+                binding.emptyState.visibility = View.VISIBLE
+                binding.chatRecycler.visibility = View.GONE
+            }
+        }
+
+        // Спостерігач за станом завантаження
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.loadingIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.sendButton.isEnabled = !isLoading // Блокуємо кнопку під час завантаження
         }
     }
 
@@ -86,5 +148,10 @@ class ChatFragment : Fragment() {
             .translationY(0f)
             .setDuration(300)
             .start()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

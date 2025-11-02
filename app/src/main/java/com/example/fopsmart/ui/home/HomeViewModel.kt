@@ -64,6 +64,30 @@ class HomeViewModel : ViewModel() {
         }
     }
 
+    fun connectMonobank(token: String, monoToken: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+
+            when (val result = transactionRepository.connectMonobank(token, monoToken)) {
+                is Result.Success -> {
+                    if (result.data) {
+                        _isBankConnection.value = true
+                        _bankConnectionError.value = null
+                        loadTransactions(token)
+                    } else {
+                        _bankConnectionError.value = "Не вдалося підключити Монобанк"
+                        _isLoading.value = false
+                    }
+                }
+                is Result.Error -> {
+                    _isBankConnection.value = false
+                    _bankConnectionError.value = result.exception.message ?: "Помилка при підключенні Монобанку"
+                    _isLoading.value = false
+                }
+            }
+        }
+    }
+
     @SuppressLint("NullSafeMutableLiveData")
     fun loadTransactions(token: String) {
         viewModelScope.launch {

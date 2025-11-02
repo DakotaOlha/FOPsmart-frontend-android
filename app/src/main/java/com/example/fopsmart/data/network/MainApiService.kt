@@ -1,8 +1,10 @@
 package com.example.fopsmart.data.network
 
 import com.example.fopsmart.data.model.AuthResponse
+import com.example.fopsmart.data.model.ConnectRequest
 import com.example.fopsmart.data.model.LoginRequest
 import com.example.fopsmart.data.model.LoginResponse
+import com.example.fopsmart.data.model.MonobankConnectResponse
 import com.example.fopsmart.data.model.MonobankStatusResponse
 import com.example.fopsmart.data.model.RegisterRequest
 import com.example.fopsmart.data.model.TransactionResponse
@@ -28,5 +30,11 @@ interface MainApiService {
     suspend fun getMonoStatus(
         @Header("Authorization") token: String
     ): Response<MonobankStatusResponse>
+
+    @POST("monobank/connect")
+    suspend fun setMonoConnection(
+        @Header("Authorization") token: String,
+        @Body request: ConnectRequest
+    ): Response<MonobankConnectResponse>
 
 }

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private const val MAIN_API_URL = "https://fopsmart-4030403a47a5.herokuapp.com/api/"
-    private const val AI_API_URL = "http://10.15.177.14:5000"
+    private const val AI_API_URL = "https://fopsmart-backend-ai.onrender.com"
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

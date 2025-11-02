@@ -1,5 +1,6 @@
 package com.example.fopsmart.data.network
 
+import com.example.fopsmart.data.model.AccountBalancesResponse
 import com.example.fopsmart.data.model.AuthResponse
 import com.example.fopsmart.data.model.ConnectRequest
 import com.example.fopsmart.data.model.LoginRequest
@@ -13,6 +14,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface MainApiService {
     @POST("auth/login")
@@ -23,8 +25,16 @@ interface MainApiService {
 
     @GET("transactions")
     suspend fun getTransactions(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("dateFrom") dateFrom: String? = null,
+        @Query("dateTo") dateTo: String? = null,
+        @Query("limit") limit: Int = 50
     ): Response<TransactionResponse>
+
+    @GET("transactions/balances")
+    suspend fun getAccountBalances(
+        @Header("Authorization") token: String
+    ): Response<AccountBalancesResponse>
 
     @GET("monobank/status")
     suspend fun getMonoStatus(

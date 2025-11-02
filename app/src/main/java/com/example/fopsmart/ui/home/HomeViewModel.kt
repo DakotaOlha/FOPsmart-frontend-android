@@ -1,7 +1,6 @@
 package com.example.fopsmart.ui.home
 
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -46,6 +45,7 @@ class HomeViewModel : ViewModel() {
                     _bankConnectionError.value = null
 
                     if (isBankConnected) {
+                        transactionRepository.getAccountBalances(token)
                         loadTransactions(token)
                     } else {
                         _transactions.value = emptyList()

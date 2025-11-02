@@ -2,10 +2,12 @@ package com.example.fopsmart.ui.chat
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnPreDraw
@@ -24,6 +26,7 @@ class ChatFragment : Fragment() {
 
     private lateinit var chatAdapter: ChatAdapter
     private val messageList = mutableListOf<ChatMessage>()
+    private lateinit var fr: FrameLayout
 
     companion object {
         fun newInstance() = ChatFragment()
@@ -43,6 +46,12 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fr = binding.main
+
+        val params = fr.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(0, 0, 0, 220)
+        fr.layoutParams = params
 
         setupRecyclerView()
 
@@ -85,25 +94,21 @@ class ChatFragment : Fragment() {
             chatAdapter.notifyDataSetChanged()
 
             if (messages.isNotEmpty()) {
-                // Прокрутка до останнього повідомлення
                 binding.chatRecycler.smoothScrollToPosition(messages.size - 1)
 
-                // Якщо це було перше повідомлення, сховати "empty state"
                 if (wasEmpty) {
                     binding.emptyState.visibility = View.GONE
                     binding.chatRecycler.visibility = View.VISIBLE
                 }
             } else {
-                // Якщо повідомлень немає (навряд чи, але про всяк випадок)
                 binding.emptyState.visibility = View.VISIBLE
                 binding.chatRecycler.visibility = View.GONE
             }
         }
 
-        // Спостерігач за станом завантаження
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.loadingIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
-            binding.sendButton.isEnabled = !isLoading // Блокуємо кнопку під час завантаження
+            binding.sendButton.isEnabled = !isLoading
         }
     }
 
@@ -126,8 +131,14 @@ class ChatFragment : Fragment() {
             val isKeyboardVisible = keyboardHeight > 0
 
             if (isKeyboardVisible) {
+                val params = fr.layoutParams as ViewGroup.MarginLayoutParams
+                params.setMargins(0, 0, 0, 40)
+                fr.layoutParams = params
                 animateInputContainerUp(keyboardHeight)
             } else {
+                val params = fr.layoutParams as ViewGroup.MarginLayoutParams
+                params.setMargins(0, 0, 0, 220)
+                fr.layoutParams = params
                 animateInputContainerDown()
             }
 

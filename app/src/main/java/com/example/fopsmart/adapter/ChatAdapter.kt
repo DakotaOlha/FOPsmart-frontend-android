@@ -7,9 +7,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fopsmart.R
 import com.example.fopsmart.data.model.ChatMessage
+import io.noties.markwon.Markwon
+import io.noties.markwon.linkify.LinkifyPlugin
 
 class ChatAdapter(private val messages: List<ChatMessage>) :
     RecyclerView.Adapter<ChatAdapter.MessageViewHolder>() {
+
+    private var markwon: Markwon? = null
 
     companion object {
         private const val VIEW_TYPE_USER = 1
@@ -26,12 +30,20 @@ class ChatAdapter(private val messages: List<ChatMessage>) :
         } else {
             R.layout.item_chat_bot
         }
+
+        if (markwon == null) {
+            val context = parent.context
+            markwon = Markwon.builder(context)
+                .usePlugin(LinkifyPlugin.create())
+                .build()
+        }
+
         val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
         return MessageViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        holder.messageText.text = messages[position].text
+        markwon?.setMarkdown(holder.messageText, messages[position].text)
     }
 
     override fun getItemCount() = messages.size

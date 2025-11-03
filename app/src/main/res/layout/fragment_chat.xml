@@ -89,8 +89,9 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:paddingLeft="16dp"
+        android:layout_marginTop="30dp"
         android:paddingRight="16dp"
-        android:paddingTop="8dp"
+        android:paddingTop="16dp"
         android:paddingBottom="80dp"
         android:clipToPadding="false"
         android:visibility="gone" />

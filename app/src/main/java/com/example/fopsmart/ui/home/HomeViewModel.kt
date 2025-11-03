@@ -1,7 +1,6 @@
 package com.example.fopsmart.ui.home
 
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -46,6 +45,7 @@ class HomeViewModel : ViewModel() {
                     _bankConnectionError.value = null
 
                     if (isBankConnected) {
+                        transactionRepository.getAccountBalances(token)
                         loadTransactions(token)
                     } else {
                         _transactions.value = emptyList()
@@ -58,6 +58,30 @@ class HomeViewModel : ViewModel() {
                     _bankConnectionError.value = result.exception.message ?: "Невідома помилка при перевірці банку"
                     _transactions.value = emptyList()
                     _totalBalance.value = "₴ 0"
+                    _isLoading.value = false
+                }
+            }
+        }
+    }
+
+    fun connectMonobank(token: String, monoToken: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+
+            when (val result = transactionRepository.connectMonobank(token, monoToken)) {
+                is Result.Success -> {
+                    if (result.data) {
+                        _isBankConnection.value = true
+                        _bankConnectionError.value = null
+                        loadTransactions(token)
+                    } else {
+                        _bankConnectionError.value = "Не вдалося підключити Монобанк"
+                        _isLoading.value = false
+                    }
+                }
+                is Result.Error -> {
+                    _isBankConnection.value = false
+                    _bankConnectionError.value = result.exception.message ?: "Помилка при підключенні Монобанку"
                     _isLoading.value = false
                 }
             }

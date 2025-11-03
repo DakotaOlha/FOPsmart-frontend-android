@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.fopsmart.data.model.ChatMessage
 import com.example.fopsmart.data.model.ChatRequest
 import com.example.fopsmart.data.network.RetrofitClient
+import io.noties.markwon.Markwon
+import io.noties.markwon.linkify.LinkifyPlugin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -6,25 +6,25 @@ data class Transaction (
     @SerializedName("id")
     val id: String,
 
-    @SerializedName("id")
+    @SerializedName("date")
     val date: String,
 
-    @SerializedName("id")
+    @SerializedName("amount")
     val amount: Double,
 
-    @SerializedName("id")
+    @SerializedName("currency")
     val currency: String,
 
-    @SerializedName("id")
+    @SerializedName("category")
     val category: String,
 
-    @SerializedName("id")
+    @SerializedName("description")
     val description: String,
 
-    @SerializedName("id")
+    @SerializedName("type")
     val type: String,
 
-    @SerializedName("id")
+    @SerializedName("bankAccountId")
     val bankAccountId: String
 
 ) {

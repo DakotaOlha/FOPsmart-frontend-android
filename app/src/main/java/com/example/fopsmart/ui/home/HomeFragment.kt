@@ -1,5 +1,6 @@
 package com.example.fopsmart.ui.home
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +10,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fopsmart.R
 import com.example.fopsmart.adapter.TransactionAdapter
 import com.example.fopsmart.databinding.FragmentHomeBinding
+import com.google.android.material.textfield.TextInputEditText
 
 class HomeFragment : Fragment() {
 
@@ -127,16 +130,50 @@ class HomeFragment : Fragment() {
 
     private fun setupConnectBankButton() {
         binding.connectBankButton.setOnClickListener {
-            Toast.makeText(
-                context,
-                "Функція підключення банку буде реалізована",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            // TODO: Реалізувати редирект на сторінку підключення Монобанку
-            // val intent = Intent(requireContext(), MonobankConnectActivity::class.java)
-            // startActivity(intent)
+            showConnectBankDialog()
         }
+    }
+
+    private fun showConnectBankDialog() {
+
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_connect_bank, null)
+        val editTextToken = dialogView.findViewById<TextInputEditText>(R.id.editTextToken)
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Підключення банку")
+        builder.setView(dialogView)
+
+        builder.setPositiveButton("Підключити") { dialog, _ ->
+            val monoToken = editTextToken.text.toString().trim()
+            val userToken = sharedPreferences.getString("auth_token", null)
+
+            if (monoToken.isNotEmpty()) {
+                if (userToken != null && userToken.isNotBlank()) {
+                    homeViewModel.connectMonobank(userToken, monoToken)
+                    Toast.makeText(
+                        requireContext(),
+                        "Підключення Монобанку...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    dialog.dismiss()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Помилка: користувач не авторизований",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "Токен не може бути порожнім", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        builder.setNegativeButton("Скасувати") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
     }
 
     override fun onDestroyView() {

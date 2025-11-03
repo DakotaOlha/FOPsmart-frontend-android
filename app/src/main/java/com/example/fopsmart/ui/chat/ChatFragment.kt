@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnPreDraw
@@ -81,8 +83,15 @@ class ChatFragment : Fragment() {
             if (query.isNotEmpty()) {
                 viewModel.sendMessage(query)
                 binding.messageInput.text.clear()
+                hideKeyboard()
             }
         }
+    }
+
+    private fun hideKeyboard() {
+        val imm = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+        imm?.hideSoftInputFromWindow(binding.messageInput.windowToken, 0)
+        binding.messageInput.clearFocus()
     }
 
     private fun setupObservers() {

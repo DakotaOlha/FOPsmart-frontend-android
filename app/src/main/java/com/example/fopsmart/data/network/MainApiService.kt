@@ -26,9 +26,9 @@ interface MainApiService {
     @GET("transactions")
     suspend fun getTransactions(
         @Header("Authorization") token: String,
-        @Query("dateFrom") dateFrom: String,
-        @Query("dateTo") dateTo: String,
-        @Query("accountId") id: Int = 46,
+        @Query("dateFrom") dateFrom: String? = null,
+        @Query("dateTo") dateTo: String? = null,
+        @Query("accountId") accountId: Int? = null,
         @Query("limit") limit: Int = 50,
         @Query("type") type: String = "all"
     ): Response<TransactionResponse>

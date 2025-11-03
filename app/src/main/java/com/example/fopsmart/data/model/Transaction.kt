@@ -29,10 +29,10 @@ data class Transaction (
 
 ) {
     fun getTransactionType(): TransactionType {
-        return when (type.lowercase()) {
-            "income" -> TransactionType.INCOME
-            "expense" -> TransactionType.EXPENSE
-            else -> TransactionType.EXPENSE
+        return if (amount > 0) {
+            TransactionType.INCOME
+        } else {
+            TransactionType.EXPENSE
         }
     }
 

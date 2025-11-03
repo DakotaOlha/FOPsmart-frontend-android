@@ -45,15 +45,16 @@ class TransactionAdapter(
         private val tvAmount: TextView = itemView.findViewById(R.id.tvTransactionAmount)
 
         fun bind(transaction: Transaction) {
-            tvTitle.text = transaction.description
+            tvTitle.text = transaction.description ?: "Транзакція"
 
             val formattedDate = formatDate(transaction.date)
-            tvCategory.text = "${transaction.category} • $formattedDate"
+            val categoryText = transaction.category ?: "Інше"
+            tvCategory.text = "$categoryText • $formattedDate"
 
             val formattedAmount = formatAmount(transaction)
             tvAmount.text = formattedAmount
 
-            ivIcon.setImageResource(getCategoryIcon(transaction.category))
+            ivIcon.setImageResource(getCategoryIcon(transaction.category ?: "Інше"))
 
             when (transaction.getTransactionType()) {
                 Transaction.TransactionType.INCOME -> {
@@ -71,8 +72,10 @@ class TransactionAdapter(
 
         private fun formatAmount(transaction: Transaction): String {
             val absAmount = transaction.getAbsoluteAmount()
+            val currency = transaction.currency ?: "UAH"
 
-            return "${String.format("%.2f", absAmount)} ${transaction.currency}"
+            val sign = if (transaction.amount > 0) "+" else "-"
+            return "$sign${String.format("%.2f", absAmount)} $currency"
         }
 
         private fun formatDate(dateString: String): String {
@@ -107,6 +110,9 @@ class TransactionAdapter(
                 "розваги" -> R.drawable.img_account
                 "здоров'я" -> R.drawable.img_account
                 "комунальні" -> R.drawable.img_account
+                "таксі" -> R.drawable.img_account
+                "зв'язок" -> R.drawable.img_account
+                "банки" -> R.drawable.img_account
                 else -> R.drawable.img_account
             }
         }

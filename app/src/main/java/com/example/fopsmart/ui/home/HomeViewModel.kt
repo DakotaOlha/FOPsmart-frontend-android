@@ -10,6 +10,8 @@ import com.example.fopsmart.data.TransactionRepository
 import com.example.fopsmart.data.model.Transaction
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class HomeViewModel : ViewModel() {
@@ -33,6 +35,13 @@ class HomeViewModel : ViewModel() {
 
     private val _bankConnectionError = MutableLiveData<String?>()
     val bankConnectionError: LiveData<String?> = _bankConnectionError
+
+    private var allTransactions: List<Transaction> = emptyList()
+
+    private var selectedType: String = "all"
+    private var selectedDateFrom: String? = null
+    private var selectedDateTo: String? = null
+    private var selectedAccountId: Int? = null
 
     fun checkBankConnectionStatus(token: String) {
         viewModelScope.launch {
@@ -90,11 +99,27 @@ class HomeViewModel : ViewModel() {
 
     @SuppressLint("NullSafeMutableLiveData")
     fun loadTransactions(token: String) {
+        //loadMockTransactions()
         viewModelScope.launch {
             _isLoading.value = true
 
-            when (val result = transactionRepository.getTransactions(token)) {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            val toDate = Date()
+            val fromDate = Date(System.currentTimeMillis() - (90 * 24 * 60 * 60 * 1000L)) // 90 днів тому
+
+            val dateTo = dateFormat.format(toDate)
+            val dateFrom = dateFormat.format(fromDate)
+
+            when (val result = transactionRepository.getTransactions(
+                token = token,
+                dateFrom = dateFrom,
+                dateTo = dateTo,
+                accountId = null,
+                limit = 100,
+                type = "all"
+            )) {
                 is Result.Success -> {
+                    allTransactions = result.data
                     _transactions.value = result.data
                     calculateBalance(result.data)
                     _error.value = null
@@ -106,6 +131,74 @@ class HomeViewModel : ViewModel() {
 
             _isLoading.value = false
         }
+    }
+
+    // Фільтр за типом (витрати, доходи, усі)
+    fun filterByType(type: String) {
+        selectedType = type
+        applyFilters()
+    }
+
+    // Фільтр за датами
+    fun filterByDateRange(dateFrom: String?, dateTo: String?) {
+        selectedDateFrom = dateFrom
+        selectedDateTo = dateTo
+        applyFilters()
+    }
+
+    // Фільтр за рахунком
+    fun filterByAccountId(accountId: Int?) {
+        selectedAccountId = accountId
+        applyFilters()
+    }
+
+    // Застосувати всі фільтри
+    private fun applyFilters() {
+        var filtered = allTransactions
+
+        // Фільтр за типом
+        filtered = when (selectedType) {
+            "expense" -> filtered.filter { it.amount < 0 }
+            "income" -> filtered.filter { it.amount > 0 }
+            else -> filtered
+        }
+
+        // Фільтр за датами
+        if (selectedDateFrom != null || selectedDateTo != null) {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+            filtered = filtered.filter { transaction ->
+                val transactionDate = try {
+                    dateFormat.parse(transaction.date)
+                } catch (e: Exception) {
+                    return@filter true
+                } ?: return@filter true
+
+                val isAfterFrom = selectedDateFrom?.let {
+                    val fromDate = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(it) ?: return@let true
+                    transactionDate.after(fromDate) || transactionDate.time == fromDate.time
+                } ?: true
+
+                val isBeforeTo = selectedDateTo?.let {
+                    val toDate = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(it) ?: return@let true
+                    transactionDate.before(toDate) || transactionDate.time == toDate.time
+                } ?: true
+
+                isAfterFrom && isBeforeTo
+            }
+        }
+
+        _transactions.value = filtered
+        calculateBalance(filtered)
+    }
+
+    // Скидання фільтрів
+    fun resetFilters() {
+        selectedType = "all"
+        selectedDateFrom = null
+        selectedDateTo = null
+        selectedAccountId = null
+        _transactions.value = allTransactions
+        calculateBalance(allTransactions)
     }
 
     @SuppressLint("DefaultLocale")
@@ -125,6 +218,66 @@ class HomeViewModel : ViewModel() {
 
     fun loadMockTransactions() {
         val mockTransactions = listOf(
+            Transaction(
+                id = "1",
+                date = "2023-10-15T14:30:00Z",
+                amount = -1250.00,
+                currency = "UAH",
+                category = "Паливо",
+                description = "Заправка АЗС OKKO",
+                type = "expense",
+                bankAccountId = "456e4567-e89b-12d3-a456-426614174000"
+            ),
+            Transaction(
+                id = "2",
+                date = "2023-10-14T10:20:00Z",
+                amount = 5000.00,
+                currency = "UAH",
+                category = "Зарплата",
+                description = "Зарплата за жовтень",
+                type = "income",
+                bankAccountId = "456e4567-e89b-12d3-a456-426614174000"
+            ),
+            Transaction(
+                id = "3",
+                date = "2023-10-13T18:45:00Z",
+                amount = -450.00,
+                currency = "UAH",
+                category = "Їжа",
+                description = "Silpo",
+                type = "expense",
+                bankAccountId = "456e4567-e89b-12d3-a456-426614174000"
+            ),
+            Transaction(
+                id = "4",
+                date = "2023-10-12T09:15:00Z",
+                amount = -1250.00,
+                currency = "UAH",
+                category = "Паливо",
+                description = "Заправка АЗС WOG",
+                type = "expense",
+                bankAccountId = "456e4567-e89b-12d3-a456-426614174000"
+            ),
+            Transaction(
+                id = "5",
+                date = "2023-10-11T16:45:00Z",
+                amount = 5000.00,
+                currency = "UAH",
+                category = "Бонус",
+                description = "Годовой бонус",
+                type = "income",
+                bankAccountId = "456e4567-e89b-12d3-a456-426614174000"
+            ),
+            Transaction(
+                id = "6",
+                date = "2023-10-10T12:30:00Z",
+                amount = -450.00,
+                currency = "UAH",
+                category = "Їжа",
+                description = "Metro",
+                type = "expense",
+                bankAccountId = "456e4567-e89b-12d3-a456-426614174000"
+            ),
             Transaction(
                 id = "1",
                 date = "2023-10-15T14:30:00Z",

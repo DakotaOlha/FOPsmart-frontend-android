@@ -27,14 +27,14 @@
             android:layout_weight="1"
             android:scaleType="fitStart"
             android:src="@drawable/logo_light"
-            android:contentDescription="Logo" />
+            android:contentDescription="@string/logo_desc" />
 
         <ImageView
             android:id="@+id/accountButton"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:contentDescription="Profile"
+            android:contentDescription="@string/profile_desc"
             android:scaleType="fitEnd"
             android:src="@drawable/img_account" />
     </LinearLayout>
@@ -45,7 +45,7 @@
         android:layout_height="100dp"
         android:fontFamily="@font/manrope_bold"
         android:gravity="center_vertical"
-        android:text="₴ 0"
+        android:text="@string/base_count_text"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="40sp"
@@ -81,7 +81,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/img_account"
-                android:contentDescription="Connect Bank"
+                android:contentDescription="@string/connect_bank"
                 android:scaleType="centerInside"
                 android:layout_marginBottom="20dp" />
 
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Підключіть банк"
+                android:text="@string/connect_bank"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Для перегляду всіх ваших транзакцій"
+                android:text="@string/connect_bank_description"
                 android:textColor="@color/hint"
                 android:textSize="14sp"
                 android:layout_marginBottom="30dp"
@@ -112,7 +112,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/btn_round_purple"
-                android:text="Підключити"
+                android:text="@string/connect_button"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -129,7 +129,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Останні транзакції"
+                android:text="@string/recent_transactions"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -170,7 +170,7 @@
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
                         android:layout_marginStart="8dp"
-                        android:text="📂 Категорії"
+                        android:text="@string/filter_categories"
                         android:textSize="12sp"
                         android:textAllCaps="false"
                         android:background="@drawable/btn_filter_inactive"
@@ -185,7 +185,7 @@
                         android:paddingEnd="16dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="16dp"
-                        android:text="📅 Період"
+                        android:text="@string/filter_period"
                         android:textSize="12sp"
                         android:textAllCaps="false"
                         android:background="@drawable/btn_filter_inactive"

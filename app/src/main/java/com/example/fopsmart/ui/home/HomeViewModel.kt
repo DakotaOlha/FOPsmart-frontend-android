@@ -133,37 +133,31 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    // Фільтр за типом (витрати, доходи, усі)
     fun filterByType(type: String) {
         selectedType = type
         applyFilters()
     }
 
-    // Фільтр за датами
     fun filterByDateRange(dateFrom: String?, dateTo: String?) {
         selectedDateFrom = dateFrom
         selectedDateTo = dateTo
         applyFilters()
     }
 
-    // Фільтр за рахунком
     fun filterByAccountId(accountId: Int?) {
         selectedAccountId = accountId
         applyFilters()
     }
 
-    // Застосувати всі фільтри
     private fun applyFilters() {
         var filtered = allTransactions
 
-        // Фільтр за типом
         filtered = when (selectedType) {
             "expense" -> filtered.filter { it.amount < 0 }
             "income" -> filtered.filter { it.amount > 0 }
             else -> filtered
         }
 
-        // Фільтр за датами
         if (selectedDateFrom != null || selectedDateTo != null) {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
             filtered = filtered.filter { transaction ->

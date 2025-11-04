@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="@drawable/rounded_dialog_background"
+android:padding="24dp">
+
+<!-- Header з кнопкою закриття -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="20dp">
+
+        <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Деталі транзакції"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+        <ImageView
+        android:id="@+id/btnClose"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_close"
+        android:scaleType="centerInside"
+        android:contentDescription="Close"
+        android:background="?attr/selectableItemBackgroundBorderless" />
+    </LinearLayout>
+
+<!-- Іконка та основна інформація -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_marginBottom="24dp">
+
+        <ImageView
+        android:id="@+id/ivTransactionIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/img_account"
+        android:scaleType="centerInside"
+        android:layout_marginBottom="12dp" />
+
+        <TextView
+        android:id="@+id/tvAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+1000.00"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+        <TextView
+        android:id="@+id/tvTransactionType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Покупка"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="16sp"
+        android:textColor="@color/black" />
+
+        <TextView
+        android:id="@+id/tvCategoryDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Їжа • 12 квітня 2024, 14:30"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="12sp"
+        android:textColor="@color/hint"
+        android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+<!-- Розділювач -->
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#E0E0E0"
+    android:layout_marginBottom="16dp" />
+
+<!-- Деталі -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="16dp">
+
+<!-- Валюта -->
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+            <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Валюта"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="14sp"
+            android:textColor="@color/hint" />
+
+            <TextView
+            android:id="@+id/tvCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UAH"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="14sp"
+            android:textColor="@color/black" />
+        </LinearLayout>
+
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#F0F0F0" />
+
+    <!-- Сума -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp">
+
+        <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Сума"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="14sp"
+        android:textColor="@color/hint" />
+
+        <TextView
+        android:id="@+id/tvAmount2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+1000.00"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="14sp"
+        android:textColor="@color/black" />
+    </LinearLayout>
+
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#F0F0F0" />
+
+    <!-- Опис -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp">
+
+        <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Опис"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="14sp"
+        android:textColor="@color/hint" />
+
+        <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Покупка в магазині"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:textAlignment="textEnd"
+        android:maxLines="2"
+        android:ellipsize="end" />
+    </LinearLayout>
+
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#F0F0F0" />
+
+    <!-- MCC код -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp">
+
+        <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="MCC код"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="14sp"
+        android:textColor="@color/hint" />
+
+        <TextView
+        android:id="@+id/tvMccCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5411"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="14sp"
+        android:textColor="@color/black" />
+    </LinearLayout>
+
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#F0F0F0" />
+
+    <!-- ID транзакції -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp">
+
+        <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="ID"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="14sp"
+        android:textColor="@color/hint" />
+
+        <TextView
+        android:id="@+id/tvStatementId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12345678"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="14sp"
+        android:textColor="@color/black" />
+    </LinearLayout>
+</LinearLayout>
+
+<!-- Кнопки дій -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:spacing="12dp">
+
+    <Button
+    android:id="@+id/btnShare"
+    android:layout_width="0dp"
+    android:layout_height="44dp"
+    android:layout_weight="1"
+    android:text="Поділитися"
+    android:fontFamily="@font/manrope_bold"
+    android:textSize="12sp"
+    android:textAllCaps="false"
+    android:background="@drawable/btn_secondary_style"
+    android:textColor="@color/black" />
+
+    <Button
+    android:id="@+id/btnCopy"
+    android:layout_width="0dp"
+    android:layout_height="44dp"
+    android:layout_weight="1"
+    android:text="Копіювати"
+    android:fontFamily="@font/manrope_bold"
+    android:textSize="12sp"
+    android:textAllCaps="false"
+    android:background="@drawable/btn_secondary_style"
+    android:textColor="@color/black" />
+    </LinearLayout>
+
+</LinearLayout>

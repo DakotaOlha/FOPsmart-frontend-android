@@ -1,0 +1,77 @@
+<resources>
+    <!-- Main -->
+    <string name="app_name">FOPSmart</string>
+    <string name="title_home">Money</string>
+    <string name="title_chat">Chat</string>
+    <string name="title_stats">Data</string>
+    <string name="title_report">Report</string>
+    <string name="title_add">Add</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <!-- Login/Register -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_up">Sign Up</string>
+    <string name="action_log_in">Log In</string>
+    <string name="hint_email">name@company.com</string>
+    <string name="hint_pass">password</string>
+    <string name="hint_repeat_pass">repeat password</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">Login failed</string>
+    <string name="welcome">Welcome!</string>
+    <string name="logo_desc">Logo</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+
+    <!-- Home Fragment -->
+    <string name="profile_desc">Profile</string>
+    <string name="base_count_text">₴ 0</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="connect_bank">Connect Bank</string>
+    <string name="connect_bank_description">To view all your transactions</string>
+    <string name="connect_button">Connect</string>
+    <string name="filter_all">All</string>
+    <string name="filter_expenses">Expenses</string>
+    <string name="filter_income">Income</string>
+    <string name="filter_categories">📂 Categories</string>
+    <string name="filter_period">📅 Period</string>
+    <string name="categories_filter_developing">Categories filter - in development</string>
+    <string name="period_filter_developing">Period filter - in development</string>
+    <string name="token_not_found">Token not found, showing test data</string>
+    <string name="connecting_monobank">Connecting Monobank...</string>
+    <string name="user_not_authorized">Error: user not authorized</string>
+    <string name="token_cannot_be_empty">Token cannot be empty</string>
+    <string name="connection_bank_title">Connect Bank</string>
+    <string name="connection_bank_error">Connection error: %1$s</string>
+    <string name="error_loading_transactions">Error: %1$s</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_user_name">Someone Else</string>
+    <string name="profile_user_group">Group 4</string>
+    <string name="profile_other_settings">Other Settings</string>
+    <string name="profile_dark_theme">Dark Theme</string>
+    <string name="profile_notifications">Notifications</string>
+    <string name="profile_password">Password</string>
+    <string name="profile_language">Language</string>
+    <string name="profile_help_and_info">Help &amp; Information</string>
+    <string name="profile_help">Help</string>
+    <string name="profile_about_us">About Us</string>
+    <string name="profile_logout">Log Out</string>
+    <string name="profile_delete_account">Delete Account</string>
+
+    <string name="profile_dark_theme_on">Dark Theme</string>
+    <string name="profile_dark_theme_off">Light Theme</string>
+    <string name="toast_language_changed">Language changed to %s</string>
+    <string name="toast_logging_out">Logging out...</string>
+    <string name="toast_deleting">Deleting...</string>
+
+    <string name="dialog_language_title">Select Language</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_logout_title">Log Out</string>
+    <string name="dialog_logout_message">Are you sure you want to log out?</string>
+    <string name="dialog_button_logout">Log Out</string>
+    <string name="dialog_delete_title">Delete Account</string>
+    <string name="dialog_delete_message">This action cannot be undone. Are you sure?</string>
+    <string name="dialog_button_delete">Delete</string>
+    </resources>

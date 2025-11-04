@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
+    android:background="@color/blue100"
     android:orientation="vertical"
-    android:background="@color/blue100">
+    android:paddingTop="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center"
-            android:text="Профіль"
+            android:text="@string/profile_title"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -42,457 +42,446 @@
     </LinearLayout>
 
     <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/rounded_top"
-    android:orientation="vertical"
-        android:layout_marginTop="10dp"
-    android:paddingBottom="30dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_top"
+            android:orientation="vertical"
+            android:paddingBottom="30dp">
 
-    <!-- User Info Section -->
-    <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
 
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/profile_card_background"
-    android:padding="16dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/profile_card_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
-    <ImageView
-    android:id="@+id/profileImage"
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:src="@drawable/img_account"
-    android:scaleType="centerInside"
-    android:contentDescription="Profile Image"
-    android:background="@drawable/circle_background" />
+                    <ImageView
+                        android:id="@+id/profileImage"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/circle_background"
+                        android:contentDescription="Profile Image"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_account" />
 
-    <LinearLayout
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:layout_marginStart="16dp"
-    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-    <TextView
-    android:id="@+id/userName"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Хтось Чужий"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="16sp"
-    android:textColor="@color/black"
-    android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/userName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/profile_user_name"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
-    <TextView
-    android:id="@+id/userGroup"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="4 група"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="12sp"
-    android:textColor="@color/hint"
-    android:layout_marginTop="4dp" />
-    </LinearLayout>
+                        <TextView
+                            android:id="@+id/userGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/profile_user_group"
+                            android:textColor="@color/hint"
+                            android:textSize="12sp" />
+                    </LinearLayout>
 
-    <ImageView
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:src="@drawable/ic_arrow_right"
-    android:scaleType="centerInside"
-    android:contentDescription="Navigate" />
-    </LinearLayout>
-    </FrameLayout>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="Navigate"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_arrow_right" />
+                </LinearLayout>
+            </FrameLayout>
 
-    <!-- Settings Section -->
-    <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Інші налаштування"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="12sp"
-    android:textColor="@color/hint"
-    android:paddingStart="32dp"
-    android:paddingEnd="16dp"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:paddingStart="32dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="12dp"
+                android:text="@string/profile_other_settings"
+                android:textColor="@color/hint"
+                android:textSize="12sp" />
 
-    <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
 
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/profile_card_background"
-    android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/profile_card_background"
+                    android:orientation="vertical">
 
-    <!-- Dark Theme -->
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:background="?attr/selectableItemBackground">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
 
-    <ImageView
-    android:layout_width="28dp"
-    android:layout_height="28dp"
-    android:src="@drawable/ic_moon"
-    android:scaleType="centerInside"
-    android:contentDescription="Dark Theme" />
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="Dark Theme"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_moon" />
 
-    <TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="Темна тема"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/profile_dark_theme"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
-    <androidx.appcompat.widget.SwitchCompat
-    android:id="@+id/darkThemeSwitch"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
-    </LinearLayout>
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/darkThemeSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
 
-    <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#E0E0E0"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#E0E0E0" />
 
-    <!-- Notifications -->
-    <LinearLayout
-    android:id="@+id/notificationsItem"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:background="?attr/selectableItemBackground">
+                    <LinearLayout
+                        android:id="@+id/notificationsItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
 
-    <ImageView
-    android:layout_width="28dp"
-    android:layout_height="28dp"
-    android:src="@drawable/ic_notification"
-    android:scaleType="centerInside"
-    android:contentDescription="Notifications" />
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="Notifications"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_notification" />
 
-    <TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="Повідомлення"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/profile_notifications"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
-    <ImageView
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:src="@drawable/ic_arrow_right"
-    android:scaleType="centerInside"
-    android:contentDescription="Navigate" />
-    </LinearLayout>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="Navigate"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_arrow_right" />
+                    </LinearLayout>
 
-    <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#E0E0E0"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#E0E0E0" />
 
-    <!-- Password -->
-    <LinearLayout
-    android:id="@+id/passwordItem"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:background="?attr/selectableItemBackground">
+                    <LinearLayout
+                        android:id="@+id/passwordItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
 
-    <ImageView
-    android:layout_width="28dp"
-    android:layout_height="28dp"
-    android:src="@drawable/ic_lock"
-    android:scaleType="centerInside"
-    android:contentDescription="Password" />
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="Password"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_lock" />
 
-    <TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="Пароль"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/profile_password"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
-    <ImageView
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:src="@drawable/ic_arrow_right"
-    android:scaleType="centerInside"
-    android:contentDescription="Navigate" />
-    </LinearLayout>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="Navigate"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_arrow_right" />
+                    </LinearLayout>
 
-    <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#E0E0E0"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#E0E0E0" />
 
-    <!-- Language -->
-    <LinearLayout
-    android:id="@+id/languageItem"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:background="?attr/selectableItemBackground">
+                    <LinearLayout
+                        android:id="@+id/languageItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
 
-    <ImageView
-    android:layout_width="28dp"
-    android:layout_height="28dp"
-    android:src="@drawable/ic_globe"
-    android:scaleType="centerInside"
-    android:contentDescription="Language" />
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="Language"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_globe" />
 
-    <TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="Мова"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/profile_language"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
-    <ImageView
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:src="@drawable/ic_arrow_right"
-    android:scaleType="centerInside"
-    android:contentDescription="Navigate" />
-    </LinearLayout>
-    </LinearLayout>
-    </FrameLayout>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="Navigate"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_arrow_right" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
 
-    <!-- Support Section -->
-    <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Допомога та інформація"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="12sp"
-    android:textColor="@color/hint"
-    android:paddingStart="32dp"
-    android:paddingEnd="16dp"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:paddingStart="32dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="12dp"
+                android:text="@string/profile_help_and_info"
+                android:textColor="@color/hint"
+                android:textSize="12sp" />
 
-    <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
 
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/profile_card_background"
-    android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/profile_card_background"
+                    android:orientation="vertical">
 
-    <!-- Help -->
-    <LinearLayout
-    android:id="@+id/helpItem"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:background="?attr/selectableItemBackground">
+                    <LinearLayout
+                        android:id="@+id/helpItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
 
-    <ImageView
-    android:layout_width="28dp"
-    android:layout_height="28dp"
-    android:src="@drawable/ic_help"
-    android:scaleType="centerInside"
-    android:contentDescription="Help" />
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="Help"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_help" />
 
-    <TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="Допомога"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/profile_help"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
-    <ImageView
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:src="@drawable/ic_arrow_right"
-    android:scaleType="centerInside"
-    android:contentDescription="Navigate" />
-    </LinearLayout>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="Navigate"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_arrow_right" />
+                    </LinearLayout>
 
-    <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#E0E0E0"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#E0E0E0" />
 
-    <!-- About -->
-    <LinearLayout
-    android:id="@+id/aboutItem"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:background="?attr/selectableItemBackground">
+                    <LinearLayout
+                        android:id="@+id/aboutItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
 
-    <ImageView
-    android:layout_width="28dp"
-    android:layout_height="28dp"
-    android:src="@drawable/ic_info"
-    android:scaleType="centerInside"
-    android:contentDescription="About" />
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="About"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_info" />
 
-    <TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="Про нас"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/profile_about_us"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
-    <ImageView
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:src="@drawable/ic_arrow_right"
-    android:scaleType="centerInside"
-    android:contentDescription="Navigate" />
-    </LinearLayout>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="Navigate"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_arrow_right" />
+                    </LinearLayout>
 
-    <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#E0E0E0"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#E0E0E0" />
 
-    <!-- Logout -->
-    <LinearLayout
-    android:id="@+id/logoutItem"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:background="?attr/selectableItemBackground">
+                    <LinearLayout
+                        android:id="@+id/logoutItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
 
-    <ImageView
-    android:layout_width="28dp"
-    android:layout_height="28dp"
-    android:src="@drawable/ic_logout"
-    android:scaleType="centerInside"
-    android:contentDescription="Logout" />
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="Logout"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_logout" />
 
-    <TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="Вийти"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/profile_logout"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
-    <ImageView
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:src="@drawable/ic_arrow_right"
-    android:scaleType="centerInside"
-    android:contentDescription="Navigate" />
-    </LinearLayout>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="Navigate"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_arrow_right" />
+                    </LinearLayout>
 
-    <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#E0E0E0"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#E0E0E0" />
 
-    <!-- Delete -->
-    <LinearLayout
-    android:id="@+id/deliteItem"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:background="?attr/selectableItemBackground">
+                    <LinearLayout
+                        android:id="@+id/deliteItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
 
-    <ImageView
-    android:layout_width="28dp"
-    android:layout_height="28dp"
-    android:src="@drawable/ic_delite"
-    android:scaleType="centerInside"
-    android:contentDescription="Delete" />
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="Delete"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_delite" />
 
-    <TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="Видалити аккаунт"
-    android:fontFamily="@font/manrope_bold"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/profile_delete_account"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
-    <ImageView
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:src="@drawable/ic_arrow_right"
-    android:scaleType="centerInside"
-    android:contentDescription="Navigate" />
-    </LinearLayout>
-    </LinearLayout>
-    </FrameLayout>
-    </LinearLayout>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="Navigate"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_arrow_right" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
     </ScrollView>
 
-    </LinearLayout>
+</LinearLayout>

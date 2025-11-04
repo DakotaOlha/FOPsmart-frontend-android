@@ -13,13 +13,65 @@
     <string name="action_sign_up">Зареєструватися</string>
     <string name="action_log_in">Увійти</string>
     <string name="hint_email">name@company.com</string>
-    <string name="hint_pass">password</string>
-    <string name="hint_repeat_pass">repeat password</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="hint_pass">пароль</string>
+    <string name="hint_repeat_pass">повторіть пароль</string>
+    <string name="invalid_username">"Не коректне ім'я юзера"</string>
+    <string name="invalid_password">Пароль не може мати менше 5 символів</string>
+    <string name="login_failed">"Логін не коректний"</string>
     <string name="welcome">"Вітаємо !"</string>
     <string name="logo_desc">Лого</string>
     <string name="title_activity_profile">ProfileActivity</string>
+
+    <!-- Home Fragment -->
+    <string name="profile_desc">Профіль</string>
+    <string name="base_count_text">₴ 0</string>
+    <string name="recent_transactions">Останні транзакції</string>
+    <string name="connect_bank">Підключіть банк</string>
+    <string name="connect_bank_description">Для перегляду всіх ваших транзакцій</string>
+    <string name="connect_button">Підключити</string>
+    <string name="filter_all">Усі</string>
+    <string name="filter_expenses">Витрати</string>
+    <string name="filter_income">Доходи</string>
+    <string name="filter_categories">📂 Категорії</string>
+    <string name="filter_period">📅 Період</string>
+    <string name="categories_filter_developing">Фільтр категорій - у розробці</string>
+    <string name="period_filter_developing">Фільтр періоду - у розробці</string>
+    <string name="token_not_found">Токен не знайдений, показуються тестові дані</string>
+    <string name="connecting_monobank">Підключення Монобанку...</string>
+    <string name="user_not_authorized">Помилка: користувач не авторизований</string>
+    <string name="token_cannot_be_empty">Токен не може бути порожнім</string>
+    <string name="connection_bank_title">Підключення банку</string>
+    <string name="connection_bank_error">Помилка підключення: %1$s</string>
+    <string name="error_loading_transactions">Помилка: %1$s</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Профіль</string>
+    <string name="profile_user_name">Хтось Чужий</string>
+    <string name="profile_user_group">4 група</string>
+    <string name="profile_other_settings">Інші налаштування</string>
+    <string name="profile_dark_theme">Темна тема</string>
+    <string name="profile_notifications">Повідомлення</string>
+    <string name="profile_password">Пароль</string>
+    <string name="profile_language">Мова</string>
+    <string name="profile_help_and_info">Допомога та інформація</string>
+    <string name="profile_help">Допомога</string>
+    <string name="profile_about_us">Про нас</string>
+    <string name="profile_logout">Вийти</string>
+    <string name="profile_delete_account">Видалити аккаунт</string>
+
+    <string name="profile_dark_theme_on">Темна тема</string>
+    <string name="profile_dark_theme_off">Світла тема</string>
+    <string name="toast_language_changed">Мова змінена на %s</string>
+    <string name="toast_logging_out">Вихід...</string>
+    <string name="toast_deleting">Видалення...</string>
+
+    <string name="dialog_language_title">Виберіть мову</string>
+    <string name="dialog_button_cancel">Скасувати</string>
+    <string name="dialog_logout_title">Вихід</string>
+    <string name="dialog_logout_message">Ви впевнені, що хочете вийти?</string>
+    <string name="dialog_button_logout">Вийти</string>
+    <string name="dialog_delete_title">Видалити аккаунт</string>
+    <string name="dialog_delete_message">Ця дія не може бути скасована. Ви впевнені?</string>
+    <string name="dialog_button_delete">Видалити</string>
 
 </resources>

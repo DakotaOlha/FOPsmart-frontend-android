@@ -1,5 +1,7 @@
 package com.example.fopsmart.adapter
 
+import androidx.fragment.app.FragmentActivity
+import com.example.fopsmart.ui.transaction.TransactionDetailDialogFragment
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -58,15 +60,23 @@ class TransactionAdapter(
 
             when (transaction.getTransactionType()) {
                 Transaction.TransactionType.INCOME -> {
-                    tvAmount.setTextColor(Color.parseColor("#4CAF50")) // Зелений
+                    tvAmount.setTextColor(Color.parseColor("#4CAF50"))
                 }
                 Transaction.TransactionType.EXPENSE -> {
-                    tvAmount.setTextColor(Color.parseColor("#F44336")) // Червоний
+                    tvAmount.setTextColor(Color.parseColor("#F44336"))
                 }
             }
 
             itemView.setOnClickListener {
-                onTransactionClick(transaction)
+                openTransactionDetail(transaction)
+            }
+        }
+
+        private fun openTransactionDetail(transaction: Transaction) {
+            val dialog = TransactionDetailDialogFragment.newInstance(transaction)
+            val fragmentManager = (itemView.context as? androidx.fragment.app.FragmentActivity)?.supportFragmentManager
+            fragmentManager?.let {
+                dialog.show(it, "transaction_detail")
             }
         }
 

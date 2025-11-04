@@ -1,6 +1,7 @@
 package com.example.fopsmart.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Transaction (
     @SerializedName("id")
@@ -27,7 +28,7 @@ data class Transaction (
     @SerializedName("bankAccountId")
     val bankAccountId: String
 
-) {
+): Serializable {
     fun getTransactionType(): TransactionType {
         return if (amount > 0) {
             TransactionType.INCOME

@@ -1,6 +1,7 @@
 package com.example.fopsmart.ui.home
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fopsmart.R
 import com.example.fopsmart.adapter.TransactionAdapter
 import com.example.fopsmart.databinding.FragmentHomeBinding
-import com.example.fopsmart.ui.profile.ProfileDialogFragment
+import com.example.fopsmart.ui.profile.ProfileActivity
 import com.google.android.material.textfield.TextInputEditText
 
 class HomeFragment : Fragment() {
@@ -60,8 +61,8 @@ class HomeFragment : Fragment() {
 
     private fun setupProfileClickListener() {
         binding.accountButton.setOnClickListener {
-            val profileDialog = ProfileDialogFragment()
-            profileDialog.show(parentFragmentManager, "profile_dialog")
+            val intent = Intent(requireContext(), ProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 

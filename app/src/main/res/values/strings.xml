@@ -20,5 +20,6 @@
     <string name="login_failed">"Login failed"</string>
     <string name="welcome">"Вітаємо !"</string>
     <string name="logo_desc">Лого</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

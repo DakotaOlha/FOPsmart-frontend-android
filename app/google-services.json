@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "817329982411",
+    "project_id": "fopsmart-764f0",
+    "storage_bucket": "fopsmart-764f0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817329982411:android:5d0d128bea33e0a0f1444e",
+        "android_client_info": {
+          "package_name": "com.example.fopsmart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9y7EwCCKXB-2SL0zOF0QZfGdor4pt8NE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,10 +19,10 @@ object RetrofitClient {
         .build()
 
     private val okHttpClient = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)  // час на підключення
-        .readTimeout(30, TimeUnit.SECONDS)     // час на читання даних
-        .writeTimeout(30, TimeUnit.SECONDS)    // час на відправку даних
-        .retryOnConnectionFailure(true) //повторення запиту при збої
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
+        .retryOnConnectionFailure(true)
         .build()
 
     val mainApi: MainApiService by lazy {

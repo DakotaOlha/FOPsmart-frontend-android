@@ -1,6 +1,7 @@
 package com.example.fopsmart.ui.login
 
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +10,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -16,7 +18,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.fopsmart.MainActivity
 import com.example.fopsmart.databinding.ActivityLoginBinding
-
 import com.example.fopsmart.R
 import com.example.fopsmart.ui.register.RegisterActivity
 
@@ -43,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
-            login.isEnabled = loginState.isDataValid
+            login.isEnabled = loginState.isDataValid && loginViewModel.isLoading.value != true
 
             if (loginState.usernameError != null) {
                 username.error = getString(loginState.usernameError)
@@ -53,10 +54,14 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        loginViewModel.isLoading.observe(this@LoginActivity, Observer { isLoading ->
+            loading.visibility = if (isLoading) View.VISIBLE else View.GONE
+            login.isEnabled = loginViewModel.loginFormState.value?.isDataValid == true && !isLoading
+        })
+
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
@@ -91,16 +96,14 @@ class LoginActivity : AppCompatActivity() {
                 }
                 false
             }
+        }
 
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
-            }
+        login.setOnClickListener {
+            loginViewModel.login(username.text.toString(), password.text.toString())
         }
 
         registerButton.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
@@ -123,7 +126,6 @@ class LoginActivity : AppCompatActivity() {
             .apply()
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
@@ -133,7 +135,6 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }
-
 
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {

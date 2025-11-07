@@ -7,7 +7,6 @@ import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.example.fopsmart.data.LoginRepository
 import com.example.fopsmart.data.Result
-
 import com.example.fopsmart.R
 import kotlinx.coroutines.launch
 
@@ -19,16 +18,28 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(email: String, password: String) {
-        // can be launched in a separate asynchronous job
-        viewModelScope.launch {
-            val result = loginRepository.login(email, password)
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
-            if(result is Result.Success){
-                _loginResult.value =
-                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-            } else {
-                _loginResult.value = LoginResult(error = R.string.login_failed)
+    fun login(email: String, password: String) {
+        if (_isLoading.value == true) {
+            return
+        }
+
+        _isLoading.value = true
+
+        viewModelScope.launch {
+            try {
+                val result = loginRepository.login(email, password)
+
+                if (result is Result.Success) {
+                    _loginResult.value =
+                        LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+                } else {
+                    _loginResult.value = LoginResult(error = R.string.login_failed)
+                }
+            } finally {
+                _isLoading.value = false
             }
         }
     }
@@ -43,7 +54,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
-    // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
         return if (username.contains('@')) {
             Patterns.EMAIL_ADDRESS.matcher(username).matches()
@@ -52,7 +62,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
-    // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
     }

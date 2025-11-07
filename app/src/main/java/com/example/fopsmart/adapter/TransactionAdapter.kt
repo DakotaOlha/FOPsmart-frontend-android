@@ -103,7 +103,7 @@ class TransactionAdapter(
                     diffInDays == 1L -> "Вчора"
                     diffInDays < 7 -> "$diffInDays дні тому"
                     else -> {
-                        val outputFormat = SimpleDateFormat("dd MMM", Locale("uk"))
+                        val outputFormat = SimpleDateFormat("dd MMM", Locale.forLanguageTag("uk"))
                         date?.let { outputFormat.format(it) } ?: dateString
                     }
                 }

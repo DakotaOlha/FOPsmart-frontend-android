@@ -57,4 +57,9 @@
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
     </style>
 
+    <style name="SpinnerNoBorder" parent="Widget.AppCompat.Spinner">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 </resources>

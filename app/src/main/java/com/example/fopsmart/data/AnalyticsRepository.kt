@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.fopsmart.data.model.ComparisonData
 import com.example.fopsmart.data.model.DashboardData
 import com.example.fopsmart.data.model.IncomeVsExpensesResponse
+import com.example.fopsmart.data.model.LimitStatusResponse
 import com.example.fopsmart.data.model.LimitUtilization
 import com.example.fopsmart.data.model.SpendingTrend
 import com.example.fopsmart.data.model.SpendingTrendsResponse
@@ -119,6 +120,33 @@ class AnalyticsRepository {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Exception в getLimitUtilization", e)
+            Result.Error(e)
+        }
+    }
+
+    suspend fun getLimitStatus(token: String, year: Int? = null): Result<LimitStatusResponse> {
+        return try {
+            Log.d(TAG, "Завантаження статусу ліміту (новий ендпоінт)")
+            val response = apiService.getLimitStatus(
+                token = "Bearer $token",
+                year = year
+            )
+
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null) {
+                    Log.d(TAG, "Статус ліміту завантажено успішно")
+                    Log.d(TAG, "Configured: ${body.configured}, Limit: ${body.limit}, Current: ${body.currentIncome}")
+                    Result.Success(body)
+                } else {
+                    Result.Error(Exception("Порожнє тіло відповіді"))
+                }
+            } else {
+                Log.e(TAG, "Помилка завантаження статусу ліміту: ${response.code()}")
+                Result.Error(Exception("Помилка: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception в getLimitStatus", e)
             Result.Error(e)
         }
     }

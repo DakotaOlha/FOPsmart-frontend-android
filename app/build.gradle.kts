@@ -89,4 +89,11 @@ dependencies {
 
     implementation(libs.firebase.bom)
     implementation(libs.firebase.analytics)
+
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.jetbrains.kotlinx.coroutines.android)
+    implementation(libs.mpandroidchart)
+    implementation(libs.androidx.coordinatorlayout)
+    implementation(libs.androidx.cardview)
+    implementation(libs.androidx.recyclerview)
 }

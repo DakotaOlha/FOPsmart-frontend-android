@@ -2,12 +2,18 @@ package com.example.fopsmart.data.network
 
 import com.example.fopsmart.data.model.AccountBalancesResponse
 import com.example.fopsmart.data.model.AuthResponse
+import com.example.fopsmart.data.model.ComparisonData
 import com.example.fopsmart.data.model.ConnectRequest
+import com.example.fopsmart.data.model.DashboardData
+import com.example.fopsmart.data.model.IncomeVsExpensesResponse
+import com.example.fopsmart.data.model.LimitUtilization
 import com.example.fopsmart.data.model.LoginRequest
 import com.example.fopsmart.data.model.LoginResponse
 import com.example.fopsmart.data.model.MonobankConnectResponse
 import com.example.fopsmart.data.model.MonobankStatusResponse
 import com.example.fopsmart.data.model.RegisterRequest
+import com.example.fopsmart.data.model.SpendingTrend
+import com.example.fopsmart.data.model.SpendingTrendsResponse
 import com.example.fopsmart.data.model.TransactionResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -49,4 +55,29 @@ interface MainApiService {
         @Body request: ConnectRequest
     ): Response<MonobankConnectResponse>
 
+
+    @GET("analytics/dashboard")
+    suspend fun getAnalyticsDashboard(
+        @Header("Authorization") token: String,
+        @Query("days") days: Int = 30
+    ): Response<DashboardData>
+
+    @GET("analytics/spending-trends")
+    suspend fun getSpendingTrends(
+        @Header("Authorization") token: String,
+        @Query("period") period: String = "month"
+    ): Response<SpendingTrendsResponse>
+
+    @GET("analytics/income-vs-expenses")
+    suspend fun getIncomeVsExpenses(
+        @Header("Authorization") token: String,
+        @Query("groupBy") groupBy: String = "month",
+        @Query("limit") limit: Int = 12
+    ): Response<IncomeVsExpensesResponse>
+
+    @GET("analytics/limit-utilization")
+    suspend fun getLimitUtilization(
+        @Header("Authorization") token: String,
+        @Query("year") year: Int? = null
+    ): Response<LimitUtilization>
 }

@@ -2,19 +2,22 @@ package com.example.fopsmart.data.network
 
 import com.example.fopsmart.data.model.AccountBalancesResponse
 import com.example.fopsmart.data.model.AuthResponse
-import com.example.fopsmart.data.model.ComparisonData
 import com.example.fopsmart.data.model.ConnectRequest
 import com.example.fopsmart.data.model.DashboardData
 import com.example.fopsmart.data.model.IncomeVsExpensesResponse
+import com.example.fopsmart.data.model.LimitStatusResponse
 import com.example.fopsmart.data.model.LimitUtilization
 import com.example.fopsmart.data.model.LoginRequest
 import com.example.fopsmart.data.model.LoginResponse
 import com.example.fopsmart.data.model.MonobankConnectResponse
 import com.example.fopsmart.data.model.MonobankStatusResponse
 import com.example.fopsmart.data.model.RegisterRequest
-import com.example.fopsmart.data.model.SpendingTrend
+import com.example.fopsmart.data.model.ReportGenerateRequest
+import com.example.fopsmart.data.model.ReportPreview
+import com.example.fopsmart.data.model.ReportTypesResponse
 import com.example.fopsmart.data.model.SpendingTrendsResponse
 import com.example.fopsmart.data.model.TransactionResponse
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -80,4 +83,28 @@ interface MainApiService {
         @Header("Authorization") token: String,
         @Query("year") year: Int? = null
     ): Response<LimitUtilization>
+
+    @GET("profile/limit-status")
+    suspend fun getLimitStatus(
+        @Header("Authorization") token: String,
+        @Query("year") year: Int? = null
+    ): Response<LimitStatusResponse>
+
+    @GET("reports/types")
+    suspend fun getReportTypes(
+        @Header("Authorization") token: String
+    ): Response<ReportTypesResponse>
+
+    @GET("reports/preview")
+    suspend fun getReportPreview(
+        @Header("Authorization") token: String,
+        @Query("dateFrom") dateFrom: String?,
+        @Query("dateTo") dateTo: String?
+    ): Response<ReportPreview>
+
+    @POST("reports/generate")
+    suspend fun generateReport(
+        @Header("Authorization") token: String,
+        @Body request: ReportGenerateRequest
+    ): Response<ResponseBody>
 }

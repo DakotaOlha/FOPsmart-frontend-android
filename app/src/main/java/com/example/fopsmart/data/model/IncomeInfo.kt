@@ -1,8 +1,10 @@
 package com.example.fopsmart.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class IncomeInfo(
-    val total: Double,
-    val count: Int,
-    val average: Double,
-    val trend: String
+    @SerializedName("totalTransactions")
+    val totalTransactions: Int,
+    @SerializedName("totalAmount")
+    val totalAmount: Double
 )

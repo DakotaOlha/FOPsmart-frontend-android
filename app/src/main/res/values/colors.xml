@@ -22,4 +22,9 @@
     <color name="purple_200">#BB86FC</color>
     <color name="purple_500">#6200EE</color>
 
+    <!-- Кольори для графіків та статистики -->
+    <color name="green50">#E8F5E9</color>
+    <color name="red50">#FFEBEE</color>
+    <color name="blue50">#E3F2FD</color>
+
 </resources>

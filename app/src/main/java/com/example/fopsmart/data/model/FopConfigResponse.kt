@@ -1,0 +1,10 @@
+package com.example.fopsmart.data.model
+
+import com.google.gson.annotations.SerializedName
+
+data class FopConfigResponse(
+    @SerializedName("configured") val configured: Boolean,
+    @SerializedName("fopGroup") val fopGroup: Int?,
+    @SerializedName("taxSystem") val taxSystem: String?,
+    @SerializedName("limit") val limit: FopLimit?
+)

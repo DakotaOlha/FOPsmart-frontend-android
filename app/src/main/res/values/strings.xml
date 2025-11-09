@@ -7,6 +7,7 @@
     <string name="title_report">Звіт</string>
     <string name="title_add">Додати</string>
     <string name="title_activity_login">LoginActivity</string>
+
     <!-- Login/Register -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Пароль</string>
@@ -53,6 +54,7 @@
     <string name="profile_notifications">Повідомлення</string>
     <string name="profile_password">Пароль</string>
     <string name="profile_language">Мова</string>
+    <string name="profile_fop_settings">Налаштування ФОП</string>
     <string name="profile_help_and_info">Допомога та інформація</string>
     <string name="profile_help">Допомога</string>
     <string name="profile_about_us">Про нас</string>
@@ -67,11 +69,52 @@
 
     <string name="dialog_language_title">Виберіть мову</string>
     <string name="dialog_button_cancel">Скасувати</string>
+    <string name="dialog_button_save">Зберегти</string>
+    <string name="dialog_button_change">Змінити</string>
     <string name="dialog_logout_title">Вихід</string>
     <string name="dialog_logout_message">Ви впевнені, що хочете вийти?</string>
     <string name="dialog_button_logout">Вийти</string>
     <string name="dialog_delete_title">Видалити аккаунт</string>
     <string name="dialog_delete_message">Ця дія не може бути скасована. Ви впевнені?</string>
     <string name="dialog_button_delete">Видалити</string>
+
+    <!-- Edit Profile Dialog -->
+    <string name="edit_profile_title">Редагувати профіль</string>
+    <string name="personal_info_section">Особиста інформація</string>
+    <string name="fop_settings_section">Налаштування ФОП</string>
+    <string name="first_name_hint">Ім\'я</string>
+    <string name="last_name_hint">Прізвище</string>
+    <string name="fill_all_fields">Заповніть всі поля</string>
+    <string name="fop_not_configured">ФОП не налаштовано</string>
+    <string name="fop_limit_info_simple">Річний ліміт: ₴%1$d\nСтавка податку: %2$d%%</string>
+    <string name="no_changes_made">Зміни не внесено</string>
+
+    <!-- Change Password Dialog -->
+    <string name="change_password_title">Змінити пароль</string>
+    <string name="current_password_hint">Поточний пароль</string>
+    <string name="new_password_hint">Новий пароль</string>
+    <string name="confirm_password_hint">Підтвердіть пароль</string>
+    <string name="passwords_dont_match">Паролі не збігаються</string>
+    <string name="password_too_short">Пароль має містити мінімум 6 символів</string>
+
+    <!-- FOP Settings Dialog -->
+    <string name="fop_settings_title">Налаштування ФОП</string>
+    <string name="fop_group_label">Група ФОП</string>
+    <string name="fop_group_1">1 група</string>
+    <string name="fop_group_2">2 група</string>
+    <string name="fop_group_3">3 група</string>
+    <string name="tax_system_label">Система оподаткування</string>
+    <string name="tax_single">Єдиний податок</string>
+    <string name="tax_general">Загальна система</string>
+    <string name="limit_info_label">Інформація про ліміт</string>
+    <string name="fop_limit_info">Річний ліміт: ₴%1$d\n%2$s\nСтавка податку: %3$d%%</string>
+    <string name="no_limit_info">Інформація про ліміт недоступна</string>
+
+    <!-- Delete Account Dialog -->
+    <string name="delete_warning_text">⚠️ УВАГА: Видалення акаунту безповоротне! Всі ваші дані будуть втрачені назавжди.</string>
+    <string name="password_hint">Введіть пароль</string>
+    <string name="confirmation_hint">Підтвердження</string>
+    <string name="delete_confirmation_instruction">Введіть "DELETE_MY_ACCOUNT" для підтвердження</string>
+    <string name="wrong_confirmation">Невірне підтвердження</string>
 
 </resources>

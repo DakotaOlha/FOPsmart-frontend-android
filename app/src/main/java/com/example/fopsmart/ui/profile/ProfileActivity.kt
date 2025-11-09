@@ -2,6 +2,7 @@ package com.example.fopsmart.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -22,6 +23,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var languageManager: LanguageManager
     private lateinit var viewModel: ProfileViewModel
     private var authToken: String? = null
+    private val TAG = "ProfileActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +33,16 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Отримати токен з SharedPreferences
-        authToken = getSharedPreferences("auth", MODE_PRIVATE).getString("token", null)
+        // ВИПРАВЛЕНО: Використовуємо правильний ключ SharedPreferences
+        authToken = getSharedPreferences("app_prefs", MODE_PRIVATE).getString("auth_token", null)
+
+        Log.d(TAG, "Token отриманий: ${authToken?.take(20)}...")
+
+        if (authToken == null) {
+            Log.e(TAG, "Token не знайдено! Перенаправлення на логін")
+            redirectToLogin()
+            return
+        }
 
         setupViewModel()
         setupObservers()
@@ -40,6 +50,7 @@ class ProfileActivity : AppCompatActivity() {
 
         // Завантажити дані профілю
         authToken?.let {
+            Log.d(TAG, "Завантаження профілю та FOP конфігурації")
             viewModel.loadProfile(it)
             viewModel.loadFopConfig(it)
         }
@@ -56,17 +67,21 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setupObservers() {
         viewModel.profileData.observe(this) { profile ->
+            Log.d(TAG, "Profile data received: $profile")
             profile?.let {
                 // Відображення імені
                 val firstName = it.firstName ?: ""
                 val lastName = it.lastName ?: ""
 
-                binding.userName.text = when {
+                val displayName = when {
                     firstName.isNotEmpty() && lastName.isNotEmpty() -> "$firstName $lastName"
                     firstName.isNotEmpty() -> firstName
                     lastName.isNotEmpty() -> lastName
                     else -> it.email
                 }
+
+                Log.d(TAG, "Встановлення імені: $displayName")
+                binding.userName.text = displayName
 
                 // Відображення групи ФОП
                 val groupNumber = it.fopGroup ?: 0
@@ -76,31 +91,52 @@ class ProfileActivity : AppCompatActivity() {
                     else -> ""
                 }
 
-                binding.userGroup.text = when {
+                val groupText = when {
                     groupNumber > 0 && taxSystemText.isNotEmpty() ->
                         "${getString(R.string.fop_group_label)}: $groupNumber, $taxSystemText"
                     groupNumber > 0 ->
                         "${getString(R.string.fop_group_label)}: $groupNumber"
                     else -> getString(R.string.fop_not_configured)
                 }
+
+                Log.d(TAG, "Встановлення групи: $groupText")
+                binding.userGroup.text = groupText
             }
         }
 
+        viewModel.fopConfig.observe(this) { config ->
+            Log.d(TAG, "FOP config received: $config")
+        }
+
         viewModel.loading.observe(this) { isLoading ->
+            Log.d(TAG, "Loading state: $isLoading")
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
         viewModel.error.observe(this) { error ->
             error?.let {
+                Log.e(TAG, "Error: $it")
                 Toast.makeText(this, it, Toast.LENGTH_LONG).show()
                 viewModel.clearError()
+
+                // Якщо помилка 401 - токен недійсний
+                if (it.contains("401")) {
+                    redirectToLogin()
+                }
             }
         }
 
         viewModel.updateSuccess.observe(this) { message ->
             message?.let {
+                Log.d(TAG, "Success: $it")
                 Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                 viewModel.clearSuccess()
+
+                // Перезавантажити дані після успішного оновлення
+                authToken?.let { token ->
+                    viewModel.loadProfile(token)
+                    viewModel.loadFopConfig(token)
+                }
             }
         }
     }
@@ -152,6 +188,14 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun redirectToLogin() {
+        getSharedPreferences("app_prefs", MODE_PRIVATE).edit().clear().apply()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
     private fun showEditProfileDialog() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_edit_profile, null)
         val firstNameInput = dialogView.findViewById<TextInputEditText>(R.id.firstNameInput)
@@ -163,11 +207,17 @@ class ProfileActivity : AppCompatActivity() {
 
         // Заповнити поточними даними профілю
         var currentEmail = ""
+        var currentFirstName = ""
+        var currentLastName = ""
+
         viewModel.profileData.value?.let {
-            firstNameInput.setText(it.firstName ?: "")
-            lastNameInput.setText(it.lastName ?: "")
-            emailInput.setText(it.email)
+            currentFirstName = it.firstName ?: ""
+            currentLastName = it.lastName ?: ""
             currentEmail = it.email
+
+            firstNameInput.setText(currentFirstName)
+            lastNameInput.setText(currentLastName)
+            emailInput.setText(currentEmail)
         }
 
         // Налаштувати FOP групи
@@ -249,27 +299,29 @@ class ProfileActivity : AppCompatActivity() {
 
                 authToken?.let { token ->
                     // Перевірити чи змінились дані профілю
-                    var profileChanged = false
-                    viewModel.profileData.value?.let { profile ->
-                        if (profile.firstName != firstName ||
-                            profile.lastName != lastName ||
-                            profile.email != email) {
-                            profileChanged = true
-                        }
-                    }
+                    val profileChanged = firstName != currentFirstName ||
+                            lastName != currentLastName ||
+                            email != currentEmail
+
+                    // Перевірити чи змінились FOP налаштування
+                    val fopChanged = fopGroup != currentFopGroup || taxSystem != currentTaxSystem
+
+                    Log.d(TAG, "Profile changed: $profileChanged, FOP changed: $fopChanged")
 
                     // Оновити профіль якщо змінились дані
                     if (profileChanged) {
+                        Log.d(TAG, "Updating profile...")
                         viewModel.updateProfile(token, firstName, lastName, email)
                     }
 
                     // Оновити FOP налаштування якщо змінились
-                    if (fopGroup != currentFopGroup || taxSystem != currentTaxSystem) {
+                    if (fopChanged) {
+                        Log.d(TAG, "Updating FOP config...")
                         viewModel.updateFopConfig(token, fopGroup, taxSystem)
                     }
 
                     // Якщо нічого не змінилось, просто повідомити
-                    if (!profileChanged && fopGroup == currentFopGroup && taxSystem == currentTaxSystem) {
+                    if (!profileChanged && !fopChanged) {
                         Toast.makeText(this, getString(R.string.no_changes_made), Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -315,61 +367,6 @@ class ProfileActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun showFopSettingsDialog() {
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_fop_settings, null)
-        val fopGroupSpinner = dialogView.findViewById<Spinner>(R.id.fopGroupSpinner)
-        val taxSystemSpinner = dialogView.findViewById<Spinner>(R.id.taxSystemSpinner)
-        val limitInfo = dialogView.findViewById<TextView>(R.id.limitInfoText)
-
-        // Налаштувати FOP групи
-        val fopGroups = arrayOf(
-            getString(R.string.fop_group_1),
-            getString(R.string.fop_group_2),
-            getString(R.string.fop_group_3)
-        )
-        val fopAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, fopGroups)
-        fopAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        fopGroupSpinner.adapter = fopAdapter
-
-        // Налаштувати системи оподаткування
-        val taxSystems = arrayOf(
-            getString(R.string.tax_single),
-            getString(R.string.tax_general)
-        )
-        val taxAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, taxSystems)
-        taxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        taxSystemSpinner.adapter = taxAdapter
-
-        // Встановити поточні значення
-        viewModel.fopConfig.value?.let { config ->
-            fopGroupSpinner.setSelection((config.fopGroup ?: 1) - 1)
-            taxSystemSpinner.setSelection(if (config.taxSystem == "single_tax") 0 else 1)
-
-            config.limit?.let { limit ->
-                limitInfo.text = getString(
-                    R.string.fop_limit_info,
-                    limit.annual,
-                    limit.description,
-                    limit.taxRate ?: 0
-                )
-            }
-        }
-
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.fop_settings_title))
-            .setView(dialogView)
-            .setPositiveButton(getString(R.string.dialog_button_save)) { _, _ ->
-                val fopGroup = fopGroupSpinner.selectedItemPosition + 1
-                val taxSystem = if (taxSystemSpinner.selectedItemPosition == 0) "single_tax" else "general"
-
-                authToken?.let { token ->
-                    viewModel.updateFopConfig(token, fopGroup, taxSystem)
-                }
-            }
-            .setNegativeButton(getString(R.string.dialog_button_cancel), null)
-            .show()
-    }
-
     private fun showLanguageDialog() {
         val languages = arrayOf("Українська", "English")
         val languageCodes = arrayOf(LanguageManager.UKRAINIAN, LanguageManager.ENGLISH)
@@ -402,10 +399,8 @@ class ProfileActivity : AppCompatActivity() {
             .setTitle(getString(R.string.dialog_logout_title))
             .setMessage(getString(R.string.dialog_logout_message))
             .setPositiveButton(getString(R.string.dialog_button_logout)) { _, _ ->
-                // Очистити токен
-                getSharedPreferences("auth", MODE_PRIVATE).edit().clear().apply()
+                getSharedPreferences("app_prefs", MODE_PRIVATE).edit().clear().apply()
 
-                // Перейти на екран логіну
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
@@ -441,8 +436,7 @@ class ProfileActivity : AppCompatActivity() {
                 authToken?.let { token ->
                     viewModel.deleteAccount(token, password, confirmation)
 
-                    // Після успішного видалення
-                    getSharedPreferences("auth", MODE_PRIVATE).edit().clear().apply()
+                    getSharedPreferences("app_prefs", MODE_PRIVATE).edit().clear().apply()
                     val intent = Intent(this, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
@@ -454,7 +448,6 @@ class ProfileActivity : AppCompatActivity() {
     }
 }
 
-// ViewModelFactory для створення ViewModel з параметрами
 class ProfileViewModelFactory(private val repository: ProfileRepository) :
     ViewModelProvider.Factory {
     override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {

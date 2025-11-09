@@ -120,7 +120,6 @@
             android:background="@drawable/profile_card_background" />
 
         <LinearLayout
-            android:id="@+id/limitInfoText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -139,7 +138,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/limitInfoTextContent"
+                android:id="@+id/limitInfoText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"

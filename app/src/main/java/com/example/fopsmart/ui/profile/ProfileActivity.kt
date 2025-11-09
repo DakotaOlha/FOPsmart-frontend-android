@@ -31,12 +31,14 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Отримати токен з SharedPreferences
         authToken = getSharedPreferences("auth", MODE_PRIVATE).getString("token", null)
 
         setupViewModel()
         setupObservers()
         setupClickListeners()
 
+        // Завантажити дані профілю
         authToken?.let {
             viewModel.loadProfile(it)
             viewModel.loadFopConfig(it)
@@ -55,6 +57,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun setupObservers() {
         viewModel.profileData.observe(this) { profile ->
             profile?.let {
+                // Відображення імені
                 val firstName = it.firstName ?: ""
                 val lastName = it.lastName ?: ""
 
@@ -65,6 +68,7 @@ class ProfileActivity : AppCompatActivity() {
                     else -> it.email
                 }
 
+                // Відображення групи ФОП
                 val groupNumber = it.fopGroup ?: 0
                 val taxSystemText = when (it.taxSystem) {
                     "single_tax" -> getString(R.string.tax_single)
@@ -155,15 +159,18 @@ class ProfileActivity : AppCompatActivity() {
         val emailInput = dialogView.findViewById<TextInputEditText>(R.id.emailInput)
         val fopGroupSpinner = dialogView.findViewById<Spinner>(R.id.fopGroupSpinner)
         val taxSystemSpinner = dialogView.findViewById<Spinner>(R.id.taxSystemSpinner)
-        val limitInfoLayout = dialogView.findViewById<LinearLayout>(R.id.limitInfoText)
-        val limitInfoContent = dialogView.findViewById<TextView>(R.id.limitInfoTextContent)
+        val limitInfoText = dialogView.findViewById<TextView>(R.id.limitInfoText)
 
+        // Заповнити поточними даними профілю
+        var currentEmail = ""
         viewModel.profileData.value?.let {
             firstNameInput.setText(it.firstName ?: "")
             lastNameInput.setText(it.lastName ?: "")
             emailInput.setText(it.email)
+            currentEmail = it.email
         }
 
+        // Налаштувати FOP групи
         val fopGroups = arrayOf(
             getString(R.string.fop_group_1),
             getString(R.string.fop_group_2),
@@ -173,6 +180,7 @@ class ProfileActivity : AppCompatActivity() {
         fopAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         fopGroupSpinner.adapter = fopAdapter
 
+        // Налаштувати системи оподаткування
         val taxSystems = arrayOf(
             getString(R.string.tax_single),
             getString(R.string.tax_general)
@@ -181,6 +189,7 @@ class ProfileActivity : AppCompatActivity() {
         taxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         taxSystemSpinner.adapter = taxAdapter
 
+        // Встановити поточні значення FOP
         var currentFopGroup = 1
         var currentTaxSystem = "single_tax"
 
@@ -192,6 +201,7 @@ class ProfileActivity : AppCompatActivity() {
             taxSystemSpinner.setSelection(if (currentTaxSystem == "single_tax") 0 else 1)
         }
 
+        // Показати інформацію про ліміт
         val updateLimitInfo = { group: Int ->
             val limitAnnual = when (group) {
                 1 -> 1167000
@@ -205,8 +215,7 @@ class ProfileActivity : AppCompatActivity() {
                 3 -> 6
                 else -> 0
             }
-            limitInfoLayout.visibility = View.VISIBLE
-            limitInfoContent.text = getString(
+            limitInfoText.text = getString(
                 R.string.fop_limit_info_simple,
                 limitAnnual,
                 taxRate
@@ -215,6 +224,7 @@ class ProfileActivity : AppCompatActivity() {
 
         updateLimitInfo(currentFopGroup)
 
+        // Оновлювати інформацію про ліміт при зміні групи
         fopGroupSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 updateLimitInfo(position + 1)
@@ -238,12 +248,29 @@ class ProfileActivity : AppCompatActivity() {
                 }
 
                 authToken?.let { token ->
-                    // Оновити профіль
-                    viewModel.updateProfile(token, firstName, lastName, email)
+                    // Перевірити чи змінились дані профілю
+                    var profileChanged = false
+                    viewModel.profileData.value?.let { profile ->
+                        if (profile.firstName != firstName ||
+                            profile.lastName != lastName ||
+                            profile.email != email) {
+                            profileChanged = true
+                        }
+                    }
+
+                    // Оновити профіль якщо змінились дані
+                    if (profileChanged) {
+                        viewModel.updateProfile(token, firstName, lastName, email)
+                    }
 
                     // Оновити FOP налаштування якщо змінились
                     if (fopGroup != currentFopGroup || taxSystem != currentTaxSystem) {
                         viewModel.updateFopConfig(token, fopGroup, taxSystem)
+                    }
+
+                    // Якщо нічого не змінилось, просто повідомити
+                    if (!profileChanged && fopGroup == currentFopGroup && taxSystem == currentTaxSystem) {
+                        Toast.makeText(this, getString(R.string.no_changes_made), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -375,9 +402,10 @@ class ProfileActivity : AppCompatActivity() {
             .setTitle(getString(R.string.dialog_logout_title))
             .setMessage(getString(R.string.dialog_logout_message))
             .setPositiveButton(getString(R.string.dialog_button_logout)) { _, _ ->
-
+                // Очистити токен
                 getSharedPreferences("auth", MODE_PRIVATE).edit().clear().apply()
 
+                // Перейти на екран логіну
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
@@ -413,6 +441,7 @@ class ProfileActivity : AppCompatActivity() {
                 authToken?.let { token ->
                     viewModel.deleteAccount(token, password, confirmation)
 
+                    // Після успішного видалення
                     getSharedPreferences("auth", MODE_PRIVATE).edit().clear().apply()
                     val intent = Intent(this, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -425,6 +454,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 }
 
+// ViewModelFactory для створення ViewModel з параметрами
 class ProfileViewModelFactory(private val repository: ProfileRepository) :
     ViewModelProvider.Factory {
     override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {

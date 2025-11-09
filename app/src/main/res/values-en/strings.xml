@@ -87,6 +87,7 @@
     <string name="fill_all_fields">Fill all fields</string>
     <string name="fop_not_configured">FOP not configured</string>
     <string name="fop_limit_info_simple">Annual Limit: ₴%1$d\nTax Rate: %2$d%%</string>
+    <string name="no_changes_made">No changes made</string>
 
     <!-- Change Password Dialog -->
     <string name="change_password_title">Change Password</string>

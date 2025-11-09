@@ -87,6 +87,7 @@
     <string name="fill_all_fields">Заповніть всі поля</string>
     <string name="fop_not_configured">ФОП не налаштовано</string>
     <string name="fop_limit_info_simple">Річний ліміт: ₴%1$d\nСтавка податку: %2$d%%</string>
+    <string name="no_changes_made">Зміни не внесено</string>
 
     <!-- Change Password Dialog -->
     <string name="change_password_title">Змінити пароль</string>

@@ -54,6 +54,7 @@
     <string name="profile_notifications">Notifications</string>
     <string name="profile_password">Password</string>
     <string name="profile_language">Language</string>
+    <string name="profile_fop_settings">FOP Settings</string>
     <string name="profile_help_and_info">Help &amp; Information</string>
     <string name="profile_help">Help</string>
     <string name="profile_about_us">About Us</string>
@@ -68,10 +69,51 @@
 
     <string name="dialog_language_title">Select Language</string>
     <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_save">Save</string>
+    <string name="dialog_button_change">Change</string>
     <string name="dialog_logout_title">Log Out</string>
     <string name="dialog_logout_message">Are you sure you want to log out?</string>
     <string name="dialog_button_logout">Log Out</string>
     <string name="dialog_delete_title">Delete Account</string>
     <string name="dialog_delete_message">This action cannot be undone. Are you sure?</string>
     <string name="dialog_button_delete">Delete</string>
-    </resources>
+
+    <!-- Edit Profile Dialog -->
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="personal_info_section">Personal Information</string>
+    <string name="fop_settings_section">FOP Settings</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="fill_all_fields">Fill all fields</string>
+    <string name="fop_not_configured">FOP not configured</string>
+    <string name="fop_limit_info_simple">Annual Limit: ₴%1$d\nTax Rate: %2$d%%</string>
+
+    <!-- Change Password Dialog -->
+    <string name="change_password_title">Change Password</string>
+    <string name="current_password_hint">Current Password</string>
+    <string name="new_password_hint">New Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="passwords_dont_match">Passwords don\'t match</string>
+    <string name="password_too_short">Password must be at least 6 characters</string>
+
+    <!-- FOP Settings Dialog -->
+    <string name="fop_settings_title">FOP Settings</string>
+    <string name="fop_group_label">FOP Group</string>
+    <string name="fop_group_1">Group 1</string>
+    <string name="fop_group_2">Group 2</string>
+    <string name="fop_group_3">Group 3</string>
+    <string name="tax_system_label">Tax System</string>
+    <string name="tax_single">Single Tax</string>
+    <string name="tax_general">General System</string>
+    <string name="limit_info_label">Limit Information</string>
+    <string name="fop_limit_info">Annual Limit: ₴%1$d\n%2$s\nTax Rate: %3$d%%</string>
+    <string name="no_limit_info">Limit information unavailable</string>
+
+    <!-- Delete Account Dialog -->
+    <string name="delete_warning_text">⚠️ WARNING: Account deletion is irreversible! All your data will be lost forever.</string>
+    <string name="password_hint">Enter password</string>
+    <string name="confirmation_hint">Confirmation</string>
+    <string name="delete_confirmation_instruction">Type "DELETE_MY_ACCOUNT" to confirm</string>
+    <string name="wrong_confirmation">Wrong confirmation</string>
+
+</resources>

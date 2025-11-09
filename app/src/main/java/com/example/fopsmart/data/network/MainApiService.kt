@@ -2,8 +2,13 @@ package com.example.fopsmart.data.network
 
 import com.example.fopsmart.data.model.AccountBalancesResponse
 import com.example.fopsmart.data.model.AuthResponse
+import com.example.fopsmart.data.model.ChangePasswordRequest
+import com.example.fopsmart.data.model.ChangePasswordResponse
 import com.example.fopsmart.data.model.ConnectRequest
 import com.example.fopsmart.data.model.DashboardData
+import com.example.fopsmart.data.model.DeleteAccountRequest
+import com.example.fopsmart.data.model.DeleteAccountResponse
+import com.example.fopsmart.data.model.FopConfigResponse
 import com.example.fopsmart.data.model.IncomeVsExpensesResponse
 import com.example.fopsmart.data.model.LimitStatusResponse
 import com.example.fopsmart.data.model.LimitUtilization
@@ -11,18 +16,25 @@ import com.example.fopsmart.data.model.LoginRequest
 import com.example.fopsmart.data.model.LoginResponse
 import com.example.fopsmart.data.model.MonobankConnectResponse
 import com.example.fopsmart.data.model.MonobankStatusResponse
+import com.example.fopsmart.data.model.ProfileResponse
 import com.example.fopsmart.data.model.RegisterRequest
 import com.example.fopsmart.data.model.ReportGenerateRequest
 import com.example.fopsmart.data.model.ReportPreview
 import com.example.fopsmart.data.model.ReportTypesResponse
 import com.example.fopsmart.data.model.SpendingTrendsResponse
 import com.example.fopsmart.data.model.TransactionResponse
+import com.example.fopsmart.data.model.UpdateFopRequest
+import com.example.fopsmart.data.model.UpdateFopResponse
+import com.example.fopsmart.data.model.UpdateProfileRequest
+import com.example.fopsmart.data.model.UpdateProfileResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface MainApiService {
@@ -107,4 +119,38 @@ interface MainApiService {
         @Header("Authorization") token: String,
         @Body request: ReportGenerateRequest
     ): Response<ResponseBody>
+
+    @GET("profile")
+    suspend fun getProfile(
+        @Header("Authorization") token: String
+    ): Response<ProfileResponse>
+
+    @PUT("profile")
+    suspend fun updateProfile(
+        @Header("Authorization") token: String,
+        @Body request: UpdateProfileRequest
+    ): Response<UpdateProfileResponse>
+
+    @PUT("profile/password")
+    suspend fun changePassword(
+        @Header("Authorization") token: String,
+        @Body request: ChangePasswordRequest
+    ): Response<ChangePasswordResponse>
+
+    @GET("profile/fop")
+    suspend fun getFopConfig(
+        @Header("Authorization") token: String
+    ): Response<FopConfigResponse>
+
+    @PUT("profile/fop")
+    suspend fun updateFopConfig(
+        @Header("Authorization") token: String,
+        @Body request: UpdateFopRequest
+    ): Response<UpdateFopResponse>
+
+    @HTTP(method = "DELETE", path = "profile/delete", hasBody = true)
+    suspend fun deleteAccount(
+        @Header("Authorization") token: String,
+        @Body request: DeleteAccountRequest
+    ): Response<DeleteAccountResponse>
 }

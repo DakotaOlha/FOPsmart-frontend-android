@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.fopsmart.R
 import com.example.fopsmart.data.model.Transaction
 import com.example.fopsmart.databinding.DialogTransactionDetailBinding
+import com.example.fopsmart.utils.CategoryMapper
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -51,11 +52,14 @@ class TransactionDetailDialogFragment : DialogFragment() {
     }
 
     private fun setupUI(transaction: Transaction) {
+
         binding.tvTransactionType.text = transaction.description ?: "Транзакція"
 
-        val category = transaction.category ?: "Інше"
+
+        val category = CategoryMapper.getUkrainianCategoryName(transaction.mcc)
         val date = formatFullDate(transaction.date)
         binding.tvCategoryDate.text = "$category • $date"
+
 
         val formattedAmount = formatAmount(transaction)
         binding.tvAmount.text = formattedAmount
@@ -71,12 +75,15 @@ class TransactionDetailDialogFragment : DialogFragment() {
             }
         }
 
-        binding.ivTransactionIcon.setImageResource(getCategoryIcon(category))
+        binding.ivTransactionIcon.setImageResource(CategoryMapper.getCategoryIcon(transaction.mcc))
 
         binding.tvCurrency.text = transaction.currency ?: "UAH"
         binding.tvAmount2.text = formatAmount(transaction)
         binding.tvDescription.text = transaction.description ?: "Без опису"
         binding.tvStatementId.text = transaction.id ?: "N/A"
+
+        transaction.mcc?.let { mcc ->
+        }
     }
 
     private fun setupClickListeners() {
@@ -122,10 +129,11 @@ class TransactionDetailDialogFragment : DialogFragment() {
 
     private fun buildTransactionText(): String {
         transaction?.let {
+            val category = CategoryMapper.getUkrainianCategoryName(it.mcc)
             return """
             Транзакція: ${it.description}
             Сума: ${formatAmount(it)} ${it.currency}
-            Категорія: ${it.category}
+            Категорія: $category
             Дата: ${formatFullDate(it.date)}
             ID: ${it.id}
         """.trimIndent()
@@ -149,21 +157,6 @@ class TransactionDetailDialogFragment : DialogFragment() {
             date?.let { outputFormat.format(it) } ?: dateString
         } catch (e: Exception) {
             dateString
-        }
-    }
-
-    private fun getCategoryIcon(category: String): Int {
-        return when (category.lowercase()) {
-            "паливо" -> R.drawable.img_account
-            "їжа", "продукти" -> R.drawable.img_account
-            "транспорт" -> R.drawable.img_account
-            "розваги" -> R.drawable.img_account
-            "здоров'я" -> R.drawable.img_account
-            "комунальні" -> R.drawable.img_account
-            "таксі" -> R.drawable.img_account
-            "зв'язок" -> R.drawable.img_account
-            "банки" -> R.drawable.img_account
-            else -> R.drawable.img_account
         }
     }
 

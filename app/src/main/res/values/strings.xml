@@ -33,8 +33,8 @@
     <string name="filter_all">Усі</string>
     <string name="filter_expenses">Витрати</string>
     <string name="filter_income">Доходи</string>
-    <string name="filter_categories">📂 Категорії</string>
-    <string name="filter_period">📅 Період</string>
+    <string name="filter_categories">Категорії</string>
+    <string name="filter_period">Період</string>
     <string name="categories_filter_developing">Фільтр категорій - у розробці</string>
     <string name="period_filter_developing">Фільтр періоду - у розробці</string>
     <string name="token_not_found">Токен не знайдений, показуються тестові дані</string>

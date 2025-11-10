@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fopsmart.R
 import com.example.fopsmart.data.model.Transaction
+import com.example.fopsmart.utils.CategoryMapper
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -50,13 +51,13 @@ class TransactionAdapter(
             tvTitle.text = transaction.description ?: "Транзакція"
 
             val formattedDate = formatDate(transaction.date)
-            val categoryText = transaction.category ?: "Інше"
+            val categoryText = CategoryMapper.getUkrainianCategoryName(transaction.mcc)
             tvCategory.text = "$categoryText • $formattedDate"
 
             val formattedAmount = formatAmount(transaction)
             tvAmount.text = formattedAmount
 
-            ivIcon.setImageResource(getCategoryIcon(transaction.category ?: "Інше"))
+            ivIcon.setImageResource(CategoryMapper.getCategoryIcon(transaction.mcc))
 
             when (transaction.getTransactionType()) {
                 Transaction.TransactionType.INCOME -> {
@@ -109,21 +110,6 @@ class TransactionAdapter(
                 }
             } catch (e: Exception) {
                 dateString
-            }
-        }
-
-        private fun getCategoryIcon(category: String): Int {
-            return when (category.lowercase()) {
-                "паливо" -> R.drawable.img_account
-                "їжа", "продукти" -> R.drawable.img_account
-                "транспорт" -> R.drawable.img_account
-                "розваги" -> R.drawable.img_account
-                "здоров'я" -> R.drawable.img_account
-                "комунальні" -> R.drawable.img_account
-                "таксі" -> R.drawable.img_account
-                "зв'язок" -> R.drawable.img_account
-                "банки" -> R.drawable.img_account
-                else -> R.drawable.img_account
             }
         }
     }

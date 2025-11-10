@@ -16,8 +16,11 @@ data class Transaction (
     @SerializedName("currency")
     val currency: String,
 
+    @SerializedName("mcc")
+    val mcc: Int? = null,
+
     @SerializedName("category")
-    val category: String,
+    val category: String? = null,
 
     @SerializedName("description")
     val description: String,
@@ -41,6 +44,13 @@ data class Transaction (
         return kotlin.math.abs(amount)
     }
 
+    fun getCategoryNameUkrainian(): String {
+        return com.example.fopsmart.utils.CategoryMapper.getUkrainianCategoryName(mcc)
+    }
+
+    fun getCategoryIcon(): Int {
+        return com.example.fopsmart.utils.CategoryMapper.getCategoryIcon(mcc)
+    }
 
     enum class TransactionType{
         INCOME,

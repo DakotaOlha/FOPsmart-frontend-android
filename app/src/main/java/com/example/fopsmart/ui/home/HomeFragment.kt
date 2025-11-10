@@ -5,6 +5,8 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.fopsmart.R
 import com.example.fopsmart.adapter.TransactionAdapter
 import com.example.fopsmart.databinding.FragmentHomeBinding
@@ -35,6 +38,20 @@ class HomeFragment : Fragment() {
 
     private var activeFilterButton: Button? = null
 
+    // Для автооновлення
+    private val autoRefreshHandler = Handler(Looper.getMainLooper())
+    private val AUTO_REFRESH_INTERVAL = 5 * 60 * 1000L // 5 хвилин
+    private var isAutoRefreshEnabled = true
+
+    private val autoRefreshRunnable = object : Runnable {
+        override fun run() {
+            if (isAutoRefreshEnabled) {
+                refreshTransactions(showLoading = false)
+                autoRefreshHandler.postDelayed(this, AUTO_REFRESH_INTERVAL)
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,6 +66,7 @@ class HomeFragment : Fragment() {
         sharedPreferences = requireContext().getSharedPreferences("app_prefs", 0)
 
         setupRecyclerView()
+        setupSwipeRefresh()
         observeTransactions()
         observeBankConnection()
         observeLoading()
@@ -59,6 +77,53 @@ class HomeFragment : Fragment() {
         checkBankStatusOnFragmentLoad()
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Оновлюємо транзакції при поверненні до фрагмента
+        val token = sharedPreferences.getString("auth_token", null)
+        if (token != null && token.isNotBlank() && homeViewModel.isBankConnection.value == true) {
+            refreshTransactions(showLoading = false)
+        }
+
+        // Запускаємо автооновлення
+        startAutoRefresh()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Зупиняємо автооновлення коли фрагмент не видимий
+        stopAutoRefresh()
+    }
+
+    private fun setupSwipeRefresh() {
+        // Якщо у вас є SwipeRefreshLayout в XML
+        binding.swipeRefreshLayout?.setOnRefreshListener {
+            refreshTransactions(showLoading = true)
+        }
+    }
+
+    private fun refreshTransactions(showLoading: Boolean = true) {
+        val token = sharedPreferences.getString("auth_token", null)
+        if (token != null && token.isNotBlank()) {
+            homeViewModel.loadTransactions(token)
+            if (!showLoading) {
+                Log.d(TAG, "Автооновлення транзакцій")
+            }
+        }
+    }
+
+    private fun startAutoRefresh() {
+        isAutoRefreshEnabled = true
+        autoRefreshHandler.postDelayed(autoRefreshRunnable, AUTO_REFRESH_INTERVAL)
+        Log.d(TAG, "Автооновлення увімкнено (кожні ${AUTO_REFRESH_INTERVAL / 1000 / 60} хв)")
+    }
+
+    private fun stopAutoRefresh() {
+        isAutoRefreshEnabled = false
+        autoRefreshHandler.removeCallbacks(autoRefreshRunnable)
+        Log.d(TAG, "Автооновлення зупинено")
     }
 
     private fun setupProfileClickListener() {
@@ -165,6 +230,8 @@ class HomeFragment : Fragment() {
     private fun observeTransactions() {
         homeViewModel.transactions.observe(viewLifecycleOwner) { transactions ->
             transactionAdapter.submitList(transactions)
+            // Зупиняємо SwipeRefresh якщо він був активний
+            binding.swipeRefreshLayout?.isRefreshing = false
         }
 
         homeViewModel.totalBalance.observe(viewLifecycleOwner) { balance ->
@@ -184,20 +251,24 @@ class HomeFragment : Fragment() {
                     "Помилка підключення: $error",
                     Toast.LENGTH_SHORT
                 ).show()
+                binding.swipeRefreshLayout?.isRefreshing = false
             }
         }
 
         homeViewModel.error.observe(viewLifecycleOwner) { error ->
             if (error != null) {
                 Toast.makeText(context, "Помилка: $error", Toast.LENGTH_SHORT).show()
+                binding.swipeRefreshLayout?.isRefreshing = false
             }
         }
     }
 
     private fun observeLoading() {
         homeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            // Можна показати лоадер якщо потрібно
-            // binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            // Показуємо SwipeRefresh при завантаженні
+            if (isLoading && binding.swipeRefreshLayout?.isRefreshing == false) {
+                binding.swipeRefreshLayout?.isRefreshing = true
+            }
         }
     }
 
@@ -262,6 +333,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        stopAutoRefresh()
         _binding = null
     }
 }

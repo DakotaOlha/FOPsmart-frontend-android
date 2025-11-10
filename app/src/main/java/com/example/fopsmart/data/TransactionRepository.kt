@@ -2,6 +2,8 @@ package com.example.fopsmart.data
 
 import android.util.Log
 import com.example.fopsmart.data.model.AccountBalance
+import com.example.fopsmart.data.model.AddTransactionRequest
+import com.example.fopsmart.data.model.AddTransactionResponse
 import com.example.fopsmart.data.model.ConnectRequest
 import com.example.fopsmart.data.model.Transaction
 import com.example.fopsmart.data.network.RetrofitClient
@@ -138,6 +140,46 @@ class TransactionRepository {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Exception в getAccountBalances", e)
+            Result.Error(e)
+        }
+    }
+
+    suspend fun addTransaction(
+        token: String,
+        request: AddTransactionRequest
+    ): Result<AddTransactionResponse> {
+        return try {
+            Log.d(TAG, "Відправляємо запит на додавання транзакції")
+            Log.d(TAG, "Request: amount=${request.amount}, type=${request.type}, date=${request.transactionDate}")
+
+            val response = apiService.addTransaction(
+                token = "Bearer $token",
+                request = request
+            )
+
+            Log.d(TAG, "Response code: ${response.code()}")
+
+            if (response.isSuccessful) {
+                try {
+                    val body = response.body()
+                    Log.d(TAG, "Response body: $body")
+
+                    if (body != null) {
+                        Log.d(TAG, "Транзакція додана успішно. ID: ${body.transaction.id}")
+                        Result.Success(body)
+                    } else {
+                        Result.Error(Exception("Порожнє тіло відповіді"))
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "Помилка при розборі addTransaction: ${e.message}", e)
+                    Result.Error(e)
+                }
+            } else {
+                Log.e(TAG, "Помилка addTransaction: ${response.code()} - ${response.errorBody()?.string()}")
+                Result.Error(Exception("Помилка при додаванні транзакції: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception в addTransaction", e)
             Result.Error(e)
         }
     }

@@ -116,5 +116,7 @@
     <string name="confirmation_hint">Підтвердження</string>
     <string name="delete_confirmation_instruction">Введіть "DELETE_MY_ACCOUNT" для підтвердження</string>
     <string name="wrong_confirmation">Невірне підтвердження</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

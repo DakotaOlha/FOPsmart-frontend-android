@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.fopsmart.databinding.ActivityMainBinding
+import com.example.fopsmart.ui.transactions.AddTransactionDialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
@@ -42,8 +43,13 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         fabAdd.setOnClickListener {
-            Toast.makeText(this, "Add transaction button", Toast.LENGTH_SHORT).show()
+            showAddTransactionDialog()
         }
 
+    }
+
+    private fun showAddTransactionDialog() {
+        val dialog = AddTransactionDialogFragment.newInstance()
+        dialog.show(supportFragmentManager, "AddTransactionDialog")
     }
 }

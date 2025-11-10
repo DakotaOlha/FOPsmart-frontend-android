@@ -125,10 +125,12 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="12dp"
-            android:src="@drawable/ic_add"
             android:background="@drawable/button_background"
             android:contentDescription="Відправити повідомлення"
-            android:scaleType="centerInside" />
+            android:paddingStart="12dp"
+            android:paddingEnd="14dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_send" />
 
     </LinearLayout>
 

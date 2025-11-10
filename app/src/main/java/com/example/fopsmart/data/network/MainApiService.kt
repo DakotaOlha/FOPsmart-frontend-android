@@ -1,6 +1,8 @@
 package com.example.fopsmart.data.network
 
 import com.example.fopsmart.data.model.AccountBalancesResponse
+import com.example.fopsmart.data.model.AddTransactionRequest
+import com.example.fopsmart.data.model.AddTransactionResponse
 import com.example.fopsmart.data.model.AuthResponse
 import com.example.fopsmart.data.model.ChangePasswordRequest
 import com.example.fopsmart.data.model.ChangePasswordResponse
@@ -17,16 +19,22 @@ import com.example.fopsmart.data.model.LoginResponse
 import com.example.fopsmart.data.model.MonobankConnectResponse
 import com.example.fopsmart.data.model.MonobankStatusResponse
 import com.example.fopsmart.data.model.ProfileResponse
+import com.example.fopsmart.data.model.RegisterPushTokenRequest
+import com.example.fopsmart.data.model.RegisterPushTokenResponse
 import com.example.fopsmart.data.model.RegisterRequest
 import com.example.fopsmart.data.model.ReportGenerateRequest
 import com.example.fopsmart.data.model.ReportPreview
 import com.example.fopsmart.data.model.ReportTypesResponse
 import com.example.fopsmart.data.model.SpendingTrendsResponse
+import com.example.fopsmart.data.model.TransactionManualRequest
+import com.example.fopsmart.data.model.TransactionManualResponse
 import com.example.fopsmart.data.model.TransactionResponse
 import com.example.fopsmart.data.model.UpdateFopRequest
 import com.example.fopsmart.data.model.UpdateFopResponse
 import com.example.fopsmart.data.model.UpdateProfileRequest
 import com.example.fopsmart.data.model.UpdateProfileResponse
+import com.example.fopsmart.data.model.UpdateTransactionManual
+import com.google.gson.annotations.SerializedName
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -59,6 +67,19 @@ interface MainApiService {
         @Header("Authorization") token: String
     ): Response<AccountBalancesResponse>
 
+    @POST("transactions/manual")
+    suspend fun addTransaction(
+        @Header("Authorization") token: String,
+        @Body request: AddTransactionRequest
+    ): Response<AddTransactionResponse>
+
+    @PUT("transaction/manual")
+    suspend fun updateTransaction(
+        @Header("Authorization") token: String,
+        @Query("id") id: Int,
+        @Body request: UpdateTransactionManual
+    )
+
     @GET("monobank/status")
     suspend fun getMonoStatus(
         @Header("Authorization") token: String
@@ -69,7 +90,6 @@ interface MainApiService {
         @Header("Authorization") token: String,
         @Body request: ConnectRequest
     ): Response<MonobankConnectResponse>
-
 
     @GET("analytics/dashboard")
     suspend fun getAnalyticsDashboard(
@@ -153,4 +173,27 @@ interface MainApiService {
         @Header("Authorization") token: String,
         @Body request: DeleteAccountRequest
     ): Response<DeleteAccountResponse>
+
+    @POST("notifications/push/register")
+    suspend fun registerPushToken(
+        @Header("Authorization") token: String,
+        @Body request: RegisterPushTokenRequest
+    ): Response<RegisterPushTokenResponse>
+
+    @POST("notifications/push/deactivate")
+    suspend fun deactivatePushToken(
+        @Header("Authorization") token: String,
+        @Body request: DeactivatePushTokenRequest
+    ): Response<DeactivatePushTokenResponse>
+
+    data class DeactivatePushTokenRequest(
+        @SerializedName("platform")
+        val platform: String = "android"
+    )
+
+    data class DeactivatePushTokenResponse(
+        @SerializedName("message")
+        val message: String
+    )
+
 }

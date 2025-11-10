@@ -33,8 +33,8 @@
     <string name="filter_all">All</string>
     <string name="filter_expenses">Expenses</string>
     <string name="filter_income">Income</string>
-    <string name="filter_categories">📂 Categories</string>
-    <string name="filter_period">📅 Period</string>
+    <string name="filter_categories">Categories</string>
+    <string name="filter_period">Period</string>
     <string name="categories_filter_developing">Categories filter - in development</string>
     <string name="period_filter_developing">Period filter - in development</string>
     <string name="token_not_found">Token not found, showing test data</string>

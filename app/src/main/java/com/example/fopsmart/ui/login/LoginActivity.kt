@@ -3,6 +3,7 @@ package com.example.fopsmart.ui.login
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -20,6 +21,8 @@ import com.example.fopsmart.MainActivity
 import com.example.fopsmart.databinding.ActivityLoginBinding
 import com.example.fopsmart.R
 import com.example.fopsmart.ui.register.RegisterActivity
+import com.example.fopsmart.utils.NotificationHelper
+import com.google.firebase.messaging.FirebaseMessaging
 
 class LoginActivity : AppCompatActivity() {
 
@@ -120,10 +123,16 @@ class LoginActivity : AppCompatActivity() {
             Toast.LENGTH_LONG
         ).show()
 
-        getSharedPreferences("app_prefs", MODE_PRIVATE)
-            .edit()
+        val sharedPrefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        sharedPrefs.edit()
             .putBoolean("is_logged_in", true)
             .apply()
+
+        val authToken = sharedPrefs.getString("auth_token", null)
+
+        if (authToken != null) {
+            NotificationHelper.registerPushNotifications(this, authToken)
+        }
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

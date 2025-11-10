@@ -1,11 +1,10 @@
 [versions]
-agp = "8.11.1"
+agp = "8.11.2"
 androidxJunit = "1.1.5"
 cardview = "1.0.0"
 coordinatorlayout = "1.2.0"
 coreTesting = "2.2.0"
 espressoCoreVersion = "3.5.1"
-firebaseBom = "34.5.0"
 firebaseAnalitics = "21.5.0"
 kotlin = "2.2.0"
 coreKtx = "1.16.0"
@@ -25,7 +24,6 @@ lifecycleViewmodelKtx = "2.9.2"
 mockitoCore = "5.20.0"
 mockitoKotlin = "6.1.0"
 mpandroidchart = "v3.1.0"
-multiplatformMarkdownRenderer = "1.0.0-rc04"
 navigationFragmentKtx = "2.9.3"
 navigationUiKtx = "2.9.3"
 annotation = "1.9.1"
@@ -39,6 +37,9 @@ viewpager2 = "1.1.0"
 lifecycleRuntimeKtx = "2.9.4"
 activityCompose = "1.11.0"
 composeBom = "2024.09.00"
+firebaseMessagingKtx = "25.0.1"
+firebaseBom = "33.7.0"
+
 
 [libraries]
 androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
@@ -73,7 +74,6 @@ androidx-annotation = { group = "androidx.annotation", name = "annotation", vers
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
-multiplatform-markdown-renderer = { module = "com.mikepenz:multiplatform-markdown-renderer", version.ref = "multiplatformMarkdownRenderer" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
@@ -88,7 +88,7 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-x-x-x0 = { module = "kotlin-test:1.7.10" }
+com-google-firebase-firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
